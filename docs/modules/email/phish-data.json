@@ -1,0 +1,303 @@
+const templates = {
+    "shopping": {
+        "category":"Shopping",
+        "profileStrings":["Shops at BigShop.com"],
+        "senders": [
+            {
+                "fakeName": "BigShop.com",
+                "realName": "BigDiscounts.com",
+                "emailAddress": "deals@bigshop.com",
+                "replyAddress": "deals@bigdiscounts.com",
+                "fakeWebAddress": "https://www.bigshop.com",
+                "realWebAddress": "https://ased.bigdiscounts.com"
+            }
+        ],
+        "subject": [
+            "Hurry Limited Time Offer",
+            "Last few remaining",
+            "Time limited deal",
+            "Best deals online",
+            "50% off everything today only!",
+            "Best prices online",
+            "A special offer just for you",
+            "New catalogue discounts",
+            "Members only sale"
+        ],
+        "content": {
+            "urgency": [
+                "HURRY THESE DEALS ARE ONLY AVAILABLE TODAY!",
+                "Stock is running low, don't miss out on this opportunity",
+                "Once it's gone, it's gone, don't miss out",
+                "Last few hours of members sale - claim your discount now!"
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "Get the latest mobile phones at huge discounts from %NAME%.",
+                    "Time to upgrade your television - 50\" televisions for the price of 32\" only at %NAME%",
+                    "Our home appliances have never been so cheap. Now is the time to replace your washing machine, dishwasher, oven, or hob.",
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Click <a href=\"%URL%\">here</a> to see all our deals just for you.",
+                    "Visit <a href=\"%URL%\">%VISIBLEURL%</a> to see the best deals online",
+                    "<a href=\"%URL%\" class='btn btn-primary'>Shop Now</a>",
+                    "<a href=\"%URL%\" class='btn btn-primary'>Claim your deal!</a>",
+                ]
+            ]
+        }
+    },
+    "banking_security": {
+        "category":"Online Banking",
+        "profileStrings":["Banks with BigBank.com"],
+        "senders": [
+            {
+                "fakeName": "BigBank.com Online",
+                "realName": "Online Banking",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@onlinebanking.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.onlinebanking.com"
+            },
+            {
+                "fakeName": "BigBank.com Security Team",
+                "realName": "Bank Security Team",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@sdfjhekd.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.sdfjhekd.com"
+            },
+            {
+                "fakeName": "BigBank.com Fraud Alert",
+                "realName": "Fraud Alert Team",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@onlinepharmacy.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.onlinepharmacy.com"
+            }
+        ],
+       
+        "subject": [
+            "Account Security Alert",            
+            "Fraud Detection Alert",
+            "Security Alert",
+            "Account Activity Notification"
+        ],
+        "content": {
+            "urgency": [
+                "THIS IS NOT SPAM - DO NOT IGNORE.",
+                "ACTION REQUIRED!",
+                "Your account may be suspended or closed if you do not act now.",
+                "URGENT ALERT - Do Not Ignore.",
+                "If you do not respond your account will be suspended."
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "We have detected unusual activity on your bank account. As a precaution we have temporarily suspended your account.",
+                    "Your account has been suspended due to possible fraud detection. To reactivate your account please log in and verify your transactions.",
+                    "We have detected an unusual login to your account from IP Address 192.168.0.10 located in Brazil. As a precaution we have suspended your account.",
+                ],
+                [
+                    "Please log in online to verify your account and transactions. Until then all transactions on your account have been frozen, including all standing orders and direct debits. It is important that you act now to prevent missed payments.",
+                    "To reactivate your account please log in online to confirm your identify and your account's transactions. No further transactions will be permitted on your account until you log in and complete the verification process.",
+                    "Reactivating your account is easy, just log in online and verify your account activity.",
+                ],
+                [
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and transactions.",
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account activity.",
+                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
+                    "Click the button to complete the security verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",
+                    "Thank You<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%"
+                ],              
+            ]
+        }
+    },
+    "banking_changes": {
+        "category":"Online Banking",
+        "profileStrings":["Banks with BigBank.com"],
+        "senders": [
+            {
+                "fakeName": "BigBank.com Online",
+                "realName": "Online Banking",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@onlinebanking.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.onlinebanking.com"
+            },
+            {
+                "fakeName": "BigBank.com Security Team",
+                "realName": "Bank Security Team",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@sdfjhekd.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.sdfjhekd.com"
+            },
+            {
+                "fakeName": "BigBank.com Fraud Alert",
+                "realName": "Fraud Alert Team",
+                "emailAddress": "security@bigbank.com",
+                "replyAddress": "security@onlinepharmacy.com",
+                "fakeWebAddress": "https://www.bigbank.com",
+                "realWebAddress": "https://bigbank.onlinepharmacy.com"
+            }
+        ],
+        
+        "subject": [
+            "Your Online Banking is Changing",            
+            "Changes to how you bank online",
+            "New Online Account Management Launched",
+            "Important changes to how you bank online"
+        ],
+        "content": {
+            "urgency": [
+                "THIS IS NOT SPAM - PLEASE DO NOT IGNORE.",
+                "ACTION REQUIRED!",
+                "Your account may be suspended or closed if you do not act now.",
+                "URGENT ALERT - Do Not Ignore.",
+                "If you do not respond your account will be suspended."
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "Following a successful merger your online banking is being transferred to a new provider. To complete this transfer you need to log in to the new online banking portal.",
+                    "We are delighted to inform you of our new online banking portal. We are in the process of transferring all accounts over to the new website and yours has been selected as one of the first. To complete the transfer please complete the account verification step on our new website.",
+                    "We have recently made some changes to how you bank online. You will now need to login via new website and URL. We are making this change to meet new regulatory requirements that require us to ring fence our UK domestic banking. To complete the transfer please verify your account details on the new website.",
+                ],
+                [
+                    "Until the transfer is complete your account will be inaccessible. This is to ensure all transactions are correctly recorded on your new account.",
+                    "Accounts marked for transfer will be temporarily put on hold until verification is completed. This is to ensure the ongoing security of your account.",
+                ],
+                [
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and transactions.",
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account activity.",
+                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
+                    "Click the button to complete the security verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",
+                    "Thank You<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Faithfully<br><br>%NAME%"
+                ],              
+            ]
+        }
+    },
+    "isp_changes": {
+        "category":"Internet Service Provider",
+        "profileStrings":["Internet from BigISP.com"],
+        "senders": [
+            {
+                "fakeName": "BigISP.com",
+                "realName": "BigISP Internet Service",
+                "emailAddress": "service@bigisp.com",
+                "replyAddress": "service@yourinternet.com",
+                "fakeWebAddress": "https://www.bigisp.com",
+                "realWebAddress": "https://bigisp.yourinternet.com"
+            },
+            {
+                "fakeName": "BigISP.com Admin Team",
+                "realName": "Internet Service",
+                "emailAddress": "service@bigisp.com",
+                "replyAddress": "service@dkdkwmm.com",
+                "fakeWebAddress": "https://www.bigisp.com",
+                "realWebAddress": "https://bigisp.dkdkwmm.com"
+            },
+            {
+                "fakeName": "BigISP.com Customer Service",
+                "realName": "Customer Service Team",
+                "emailAddress": "service@bigisp.com",
+                "replyAddress": "service@freeadvice.com",
+                "fakeWebAddress": "https://www.bigisp.com",
+                "realWebAddress": "https://bigisp.freeadvice.com"
+            }
+        ],
+        
+        "subject": [
+            "Your Internet Service is Changing",            
+            "Changes to your internet service",
+            "New Internet Service Account",
+            "Important changes to how you access the internet"
+        ],
+        "content": {
+            "urgency": [
+                "THIS IS NOT SPAM - PLEASE DO NOT IGNORE.",
+                "ACTION REQUIRED!",
+                "Your internet access may be interrupted if you do not act now.",
+                "If you do not respond your internet service will be suspended."
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "We are updating our current broadband service to a new all fibre network. As part of this upgrade we will be migrating existing customers to our new fibre service. To complete the transfer you need to log in to your account and accept the new terms.",
+                    "As part of efforts to streamline our service we have partnered with BigEmail.com to provide a new improved email service. We will be transferring all existing customer over to the new service in the next 6 months. To complete the transfer please complete the account verification step with our new provider, after which your existing email account will be transferred.",
+                    "We have recently made some changes to how you manage your internet service with us. You will now need to login via a new website and URL. To complete the transfer please verify your account details on the new website.",
+                ],
+                [
+                    "If you do not complete the transfer your existing account will eventually be disabled and you will lose access to your email and internet service.",
+                    "Your existing email account will be temporarily paused until you complete the transfer ot ensure emails are not lost during the transfer.",
+                ],
+                [
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and re-activate your service.",
+                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account.",
+                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
+                    "Click the button to complete the verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",
+                    "Thank You<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Faithfully<br><br>%NAME%"
+                ],              
+            ]
+        }
+    }
+}

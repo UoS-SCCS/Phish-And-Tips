@@ -1,0 +1,78 @@
+{
+    "from": {
+        "name": "",
+        "address": ""
+    },
+    "subject": {
+        "values": []
+    },
+    "content": {
+        "urgency": [],
+        "lines": []
+    }
+}
+
+
+{
+    "senders": [
+        {
+            "name": "BigShop.com",
+            "emailAddress": "deals@BigShop.com",
+            "replyAddress": "deals@bigdiscounts.com",
+            "fakeWebAddress":"BigShop.com",
+            "realWebAddress":"ased.bigdiscounts.com"
+        }
+    ],
+    "subject": {
+        "values": [
+            "Hurry Limited Time Offer",
+            "Last few remaining",
+            "Time limited deal",
+            "Best deals online",
+            "50% off everything today only!",
+            "Best prices online",
+            "A special offer just for you",
+            "New catalogue discounts",
+            "Members only sale"
+        ]
+    },
+    "content": {
+        "urgency": [
+            "HURRY THESE DEALS ARE ONLY AVAILABLE TODAY!",
+            "Stock is running low, don't miss out on this opportunity",
+            "Once it's gone, it's gone, don't miss out",
+            "Last few hours of members sale - claim your discount now!"
+        ],
+        "lines": [
+            [
+                "Dear %RECIPIENT%",
+                "To %RECIPIENT%",
+                "Hi %RECIPIENT%",
+                "%RECIPIENT%"
+            ],
+            [
+                ""
+            ],
+            [
+                "%URGENCYTOP%"
+            ],
+            [
+                "Get the latest mobile phones at huge discounts from %NAME%.",
+                "Time to upgrade your television - 50\" televisions for the price of 32\" only at %NAME%",
+                "Our home appliances have never been so cheap. Now is the time to replace your washing machine, dishwasher, oven, or hob.",
+            ],
+            [
+                ""
+            ],
+            [
+                "%URGENCYBOTTOM%"
+            ],
+            [
+                "Click <a href=\"%URL%\">here</a> to see all our deals just for you.",
+                "Visit <a href=\"%URL%\">%WEBADDRESS%</a> to see the best deals online",
+                "<a href=\"%URL%\" class='btn btn-primary'>Shop Now</a>",
+                "<a href=\"%URL%\" class='btn btn-primary'>Claim your deal!</a>",
+            ]
+        ]
+    }
+}
