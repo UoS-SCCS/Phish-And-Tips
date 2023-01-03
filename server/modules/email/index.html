@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--
+/*******************************************************************************
+*                                                                              *
+* (C) Copyright 2021-2022 University of Surrey                                 *
+*                                                                              *
+* Redistribution and use in source and binary forms, with or without           *
+* modification, are permitted provided that the following conditions are met:  *
+*                                                                              *
+* 1. Redistributions of source code must retain the above copyright notice,    *
+* this list of conditions and the following disclaimer.                        *
+*                                                                              *
+* 2. Redistributions in binary form must reproduce the above copyright notice, *
+* this list of conditions and the following disclaimer in the documentation    *
+* and/or other materials provided with the distribution.                       *
+*                                                                              *
+* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  *
+* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    *
+* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   *
+* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    *
+* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          *
+* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         *
+* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     *
+* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      *
+* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      *
+* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   *
+* POSSIBILITY OF SUCH DAMAGE.                                                  *
+*                                                                              *
+*******************************************************************************/
+-->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="../../modules/email/gophish_config.js"></script>
+    <script src="../../modules/email/gophish.js"></script>
+    <script src="../../modules/email/gophish_game.js"></script>
+    
+    <!--refactor to dynamically load-->
+    <script src="../../modules/storage/storage.js"></script>
+    <script src="../../modules/email/email.js"></script>
+    <script src="../../modules/email/phish-data.json"></script>
+    <script src="../../js/pages/gophish-index.js"></script>
+
+
+    <link href="../../css/bootstrap-glass.css" rel="stylesheet">
+    <link href="../../css/all.min.css" rel="stylesheet">
+    <link href="../../css/sccs.css" rel="stylesheet">
+    <link href="../../css/gophishindex.css" rel="stylesheet">
+    <link href="../../css/fonts.css" rel="stylesheet">
+    <title>Phish and Tips! Training Site</title>
+
+</head>
+
+<body onload="showTrainingLanding();" onclick="">
+
+    <main class="mt-5">
+        <div class="container">
+
+            <!--Section: Best Features-->
+            <section id="introduction" class="text-center min-vh-100">
+                <div class="shadow p-3 mb-5 bg-light text-black rounded">
+                    <img src="../../imgs/logo.png" class="sccs-logo" alt="Surrey Centre for Cyber Security Logo"
+                        title="SCCS Logo">
+                    <h1>Phish and Tips! Training Site</h1>
+
+                    <!-- Heading -->
+                    <h2 class="mb-3">Introduction</h2>
+
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center mb-4">
+
+                        <!--Grid column-->
+                        <div class="col-md-6">
+                            <p>Welcome to the Phish and Tips! Training Site.</p>
+                            <!-- Description -->
+                            <p>Here is the learning material to support the lessons.
+
+                                By clicking Next through the following screens you will be guided through setting up
+                                your training email account. After that you will start the lesson.
+                            </p>
+                            <p><strong>Click Next to get started!</strong></p>
+
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+                    <p id="createNewHolder" class="d-none"><a id="createNewBtn"
+                            onclick="createNewGoPhishTrainingAccount();return false;" href="#" class="btn btn-primary">Create
+                            New Phish and Tips! Training Account</a></p>
+
+                    <a class="btn btn-primary" href="#emailintro" role="button">Next</a>
+                </div>
+            </section>
+
+            <!--Section: Best Features-->
+            <section id="emailintro" class="text-center min-vh-100">
+                <hr class="my-5">
+                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
+                    <!-- Heading -->
+                    <h2 class="mb-3 font-weight-bold">Getting Started</h2>
+
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center mb-4">
+
+                        <!--Grid column-->
+                        <div class="col-md-8">
+
+                            <!-- Description -->
+                            <p class="grey-text">Please provide a
+                                name to create your temporary training email address.
+                                This email address is only for use during the
+                                following lessons and is separate to your normal email address. It cannot be used to
+                                send or receive emails outside of the training site.
+                                <!--By using a temporary training email account it allows
+                                you to freely try out the lessons without affecting your real email account.-->
+                            </p>
+                            <!--<p>Once you have finished the training click the "Finish Training" button at the bottom of
+                                the page and your training account and temporary email address will be deleted, you do
+                                not need to doing anything further.</p>-->
+                            <p>Your temporary email address will be of the form <em>name</em>@example.com where
+                                <em>name</em> will be the value you provide below. Use your first name,
+                                for example, joe, mary, leslie.
+                            </p>
+                            <p>Your chosen name cannot have any spaces in it, but don't
+                                worry, these will be automatically removed if you do try
+                                to enter any of them.
+                            </p>
+                            <p><label for="accountName">Please enter your chosen name below:</label> </p>
+                            <!-- validate to ensure it doesn't contain another email address -->
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-right bg-white"
+                                            style="text-align: right;" id="accountName" placeholder="Enter Name"
+                                            aria-label="Name" aria-describedby="basic-addon2" pattern="[A-Za-z0-9]+"
+                                            title="Should contain only your first name consisting of just letters and numbers"
+                                            autocomplete="off">
+                                        <span class="input-group-text bg-dark" id="basic-addon2">@example.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <!--Grid row-->
+                    <a class="btn btn-primary" href="#emailcomplete" onclick="return configureGoPhishAccount(event);"
+                        role="button">Next</a>
+                </div>
+            </section>
+
+            <div id="popoverHelp" class="sticky-top fa-parent"
+                style="padding-top:10px;display:inline-block;margin-left:-1000px;left:10px;" data-bs-toggle="popover"
+                data-bs-html="true" data-bs-content="" data-bs-title="Practice Using Passwords"
+                data-bs-placement="bottom">
+                <i class="fas fa-question-circle fa-hover-beat"
+                    style="color:rgba(var(--bs-primary-rgb));font-size:48pt"></i>
+            </div>
+
+            <section id="emailcomplete" class="text-center min-vh-100">
+                <hr class="my-5">
+
+                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
+                    <!-- Heading -->
+                    <h2 class="mb-3 font-weight-bold">Training Profile</h2>
+
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center mb-4">
+
+                        <!--Grid column-->
+                        <div class="col-md-8">
+                            <p>Thank you, we have setup your new training email address: <span id="newAccount"></span>
+                            </p>
+                            <!-- Description -->
+                            <p>You can tailor your training profile to match the activities you currently perform online. You can limit the categories from
+                                which training emails are generated by selecting only categories that are of interest to you.</p>
+                            <p>By default emails will be generated
+                                at random from all categories. Select specific categories below to tailor your profile and then click the Generate once you are done.
+                                Alternatively, leave the selection as it is and click the Generate button to use the default options.
+                            </p>
+                            <div id="category-selection">
+
+                            </div>
+                            
+
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <a class="btn btn-primary" href="#generatecomplete" onclick="return generateGoPhishEmails(event);" role="button">Generate</a>
+                </div>
+                <!--Grid row-->
+
+            </section>
+
+
+
+            <!--Section: Best Features-->
+            <section id="generatecomplete" class="text-center min-vh-100">
+                <hr class="my-5">
+
+                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
+                    <!-- Heading -->
+                    <h2 class="mb-3 font-weight-bold">Training Email Account</h2>
+
+                    <!--Grid row-->
+                    <div class="row d-flex justify-content-center mb-4">
+
+                        <!--Grid column-->
+                        <div class="col-md-8">
+
+                            <!-- Description -->
+                            
+                            <p>The exercise requires you to select suspicious parts of the email. You can do that by click or touching the parts of
+                                the email that you believe are suspicious. An example is shown below:
+
+                            </p>
+                            <p>If you would like further help click <a href="">Here</a></p>
+
+                        </div>
+                        <!--Grid column-->
+
+                    </div>
+                    <a class="btn btn-primary" href="./email.html" role="button">Start</a>
+                </div>
+                <!--Grid row-->
+
+            </section>
+
+
+   
+            
+
+
+
+        <div class="modal fade" id="messageModal" data-bs-backdrop="static" data-bs-keyboard="false">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content sccs-modal-content text-black">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 id="modalHeading" class="modal-title">Please select an account</h4>
+
+                    </div>
+
+                    <!-- Modal body -->
+                    <div id="modalBody" class="modal-body">
+                        <p>Multiple training accounts have been created in this browser. Please select the account you
+                            wish to use:</p>
+                        <select id="multiAccountSelect">
+                            <option value="CreateNew">Create New Training Account</option>
+                        </select>
+
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button id="modalCloseButton" type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="checkChangeAccount()">Start</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+</body>
+
+<script src="../.././js/bootstrap/bootstrap.bundle.min.js"></script>
+
+
+</html>

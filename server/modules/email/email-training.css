@@ -1,0 +1,98 @@
+#sccs-email .sccs {
+    background-color: var(--page_bg);
+    max-width: none;
+    width: 80%;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+    float:right !important;
+}
+.sccs-email-body-div {
+    font-size:1.5rem;
+}
+
+#overall-progress {
+    margin-bottom:0.5em;
+    font-weight:bold;
+}
+#sccs-email .training-bar {
+    background-image: linear-gradient(90deg,#33b7e2,#5e62b0,#dc307c);
+    max-width: none;
+    width: 20%;
+    height: 100%;
+    padding:10px;
+    display: inline-block;
+}
+@media screen and (min-width: 540px) and (max-width: 1200px) {
+    #sccs-email .training-bar {
+        width:25%;
+    }
+    #sccs-email .sccs {
+       
+        width: 75%;
+       
+    }
+}
+#sccs-email .training-bar .training-header {
+    text-align: center;
+
+}
+.sccs-bg-light {
+    --bs-bg-opacity: 1;
+    background-color: rgba(233,233,232,var(--bs-bg-opacity))!important;
+}
+.sccs-bg-light .btn {
+    border: 1px solid transparent;
+}
+.email-list-container {
+    
+}
+#email-task-list {
+    max-height:300px;
+    overflow-y: scroll;
+    margin-bottom: 0.5em;
+}
+.btn-email {
+    display: block;
+    margin:4px;
+    position:relative;
+}
+.result-text {
+    position:absolute;
+    right:26px;
+}
+.button-icon{
+    position:absolute;
+    right:6px;
+    top:10px;
+}
+
+.bs-popover-top {
+    max-width: 400px!important;
+}
+.bs-popover-top .popover-header, .bs-popover-bottom .popover-header {
+    background-image: linear-gradient(90deg,#33b7e2,#5e62b0,#dc307c);
+    color:black;
+}
+
+.bs-popover-top .popover-body, .bs-popover-bottom .popover-body {
+    --bs-bg-opacity: 1;
+    background-color: rgba(233,233,232,var(--bs-bg-opacity))!important;
+}
+
+
+.bs-popover-bottom {
+    max-width: 400px!important;
+}
+.sccs-modal-header{
+    background-image: linear-gradient(90deg,#33b7e2,#5e62b0,#dc307c);
+    color:black;
+}
+.sccs-modal-body {
+    --bs-bg-opacity: 1;
+    background-color: rgba(233,233,232,var(--bs-bg-opacity))!important;
+}
+.sccs-modal-footer {
+    --bs-bg-opacity: 1;
+    background-color: rgba(233,233,232,var(--bs-bg-opacity))!important;
+}

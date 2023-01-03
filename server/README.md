@@ -1,0 +1,2 @@
+# Practice Using Passwords Server
+This folder contains the HTML/JS/CSS/Images for the Practice Using Passwords training service. If being hosted on a web server copy the contents of this folder to the root folder you wish to serve the training system from. If distributing to users directly for running locally this is the folder that should be distributed. Open the index.html to get started.
