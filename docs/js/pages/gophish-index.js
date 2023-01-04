@@ -424,8 +424,25 @@ function updateTrainingList() {
  * Create a new training account by clearing the current config
  */
 function createNewGoPhishTrainingAccount() {
-    goPhishGame.createNew(base_page_config);
-    window.location = "#introduction";
-    window.location.reload(true);
+    const result = window.confirm("Are you sure you want to create a new Phish and Tips! training account?\n\nThis will clear your current training progress and allow you to try all the training again.");
+    if (result) {
+        
+        window.localStorage.removeItem("sccs_email");
+        window.localStorage.removeItem("__sccs_gophish");
+        window.localStorage.removeItem("__sccs_config");
+        window.localStorage.removeItem("__sccs_gophish_user_config");
+        window.localStorage.removeItem("__sccs_user_config");
+        
+        window.localStorage.removeItem("sccs_current");
+        window.localStorage.removeItem("sccs_gophish_current");
+        
+        
+        window.location = "index.html";
+
+
+    }
+    return false;
+
+   
 
 }
