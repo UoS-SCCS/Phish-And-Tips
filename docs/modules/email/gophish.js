@@ -142,7 +142,7 @@ class EmailGenerator extends Generator {
             const subject = this.randomItem(template.subject);
             eb.setSubject(subject);
         }
-        
+        const buttonText = this.randomItem(template.buttons);
         const urgencyText = this.randomItem(template.content.urgency);
         const content = template.content.lines;
         
@@ -172,7 +172,7 @@ class EmailGenerator extends Generator {
                     break;
                 case "URL":
                     suspiciousGens[genName] = susGens[i];
-                    var generator = new URLGenerator(sender);
+                    var generator = new URLGenerator(sender, buttonText);
                     generator.init(suspiciousGens);
                     generators.push(generator);
                     break;
@@ -602,8 +602,19 @@ class SpellingGrammarGenerator extends Generator {
 
     }
     processContent(idx, selectedContent, claimed) {
-        if (selectedContent[idx].search(new RegExp("\\%[^%]*\\%", "gi")) < 0 && this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
-
+        var spellingChangeMadeGlobally =0;
+            for(var i=0;i<claimed.length;i++){
+                if(claimed[i]==this){
+                    spellingChangeMadeGlobally++;
+                }
+            }
+        if (spellingChangeMadeGlobally<=1 && selectedContent[idx].search(new RegExp("\\%[^%]*\\%", "gi")) < 0 && selectedContent[idx].search(new RegExp("<[^>]*>", "gi")) < 0 && this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
+            
+            
+            console.log("In Spelling Process Content");
+            console.log(claimed);
+            console.log(claimed[idx]);
+            console.log("Cont Spelling Process Content");
 
             var operators = this.changes.slice();
             const targetChangesToMake = this.randomInt(this.MAX_CHANGES, 1);
@@ -670,15 +681,17 @@ class SubjectSpellingGrammarGenerator extends SpellingGrammarGenerator {
     }
 }
 class URLGenerator extends Generator {
-    constructor(sender) {
+    constructor(sender, buttonText) {
         super();
         this.sender = sender;
         this.explanation = "Links can have the URLs hidden or made to appear to be going somewhere different to where they really are. For example, the text shown can be different to the actual address in the link. Or the URL can be embedded in a button or piece of text. Hover over the URL and look in the status bar to see where the link is really going.";
-
+        this.buttonText = buttonText;
         this._gen_name = "URL";
         this.isSuspicious = false;
         this.visiblePlaceholder = "%VISIBLEURL%";
         this.urlPlaceholder = "%URL%";
+        this.buttonClass = "btn btn-primary";
+        this.classPlaceholder = "%LINKCLASS%";
     }
     init(suspicious) {
         if (this._gen_name in suspicious && suspicious[this._gen_name]) {
@@ -691,12 +704,24 @@ class URLGenerator extends Generator {
         if (selectedContent[idx].indexOf(this.visiblePlaceholder) >= 0 || selectedContent[idx].indexOf(this.urlPlaceholder) >= 0) {
             //Placeholder to replace
             if (this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
-                selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.fakeWebAddress);
+                const linkType = this.randomInt(2, 1);
+                if(linkType==1){
+                    //Hidden URL with Text
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.buttonText);
+                }else{
+                    //Hidden URL with fake URL
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.fakeWebAddress);
+                }
+                if(selectedContent[idx].indexOf(this.classPlaceholder) >= 0){
+                    //Hidden URL with Button
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.classPlaceholder, this.buttonClass);
+                }
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.urlPlaceholder, this.sender.realWebAddress);
                 claimed[idx] = this;
             } else {
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.realWebAddress);
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.urlPlaceholder, this.sender.realWebAddress);
+                selectedContent[idx] = selectedContent[idx].replaceAll(this.classPlaceholder, "");
             }
         }
     }

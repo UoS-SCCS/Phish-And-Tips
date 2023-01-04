@@ -23,6 +23,7 @@ const templates = {
             "New catalogue discounts",
             "Members only sale"
         ],
+        "buttons":["Shop Now","Claim your deal!"],
         "content": {
             "urgency": [
                 "HURRY THESE DEALS ARE ONLY AVAILABLE TODAY!",
@@ -49,10 +50,10 @@ const templates = {
                     "%URGENCYBOTTOM%"
                 ],
                 [
-                    "Click <a href=\"%URL%\">here</a> to see all our deals just for you.",
+                    "Click <a href=\"%URL%\">%VISIBLEURL%</a> to see all our deals just for you.",
                     "Visit <a href=\"%URL%\">%VISIBLEURL%</a> to see the best deals online",
-                    "<a href=\"%URL%\" class='btn btn-primary'>Shop Now</a>",
-                    "<a href=\"%URL%\" class='btn btn-primary'>Claim your deal!</a>",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>"
+                    
                 ]
             ]
         }
@@ -93,6 +94,7 @@ const templates = {
             "Security Alert",
             "Account Activity Notification"
         ],
+        "buttons":["Log In Now","Verify My Account"],
         "content": {
             "urgency": [
                 "THIS IS NOT SPAM - DO NOT IGNORE.",
@@ -122,10 +124,9 @@ const templates = {
                     "Reactivating your account is easy, just log in online and verify your account activity.",
                 ],
                 [
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and transactions.",
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account activity.",
-                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
-                    "Click the button to complete the security verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your account and transactions.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your identity and account activity.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>",
                 ],
                 [
                     "%URGENCYBOTTOM%"
@@ -168,7 +169,7 @@ const templates = {
                 "realWebAddress": "https://bigbank.onlinepharmacy.com"
             }
         ],
-        
+        "buttons":["Log In Now","Verify My Account"],
         "subject": [
             "Your Online Banking is Changing",            
             "Changes to how you bank online",
@@ -203,10 +204,9 @@ const templates = {
                     "Accounts marked for transfer will be temporarily put on hold until verification is completed. This is to ensure the ongoing security of your account.",
                 ],
                 [
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and transactions.",
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account activity.",
-                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
-                    "Click the button to complete the security verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your account and transactions.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your identity and account activity.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>",
                 ],
                 [
                     "%URGENCYBOTTOM%"
@@ -249,7 +249,7 @@ const templates = {
                 "realWebAddress": "https://bigisp.freeadvice.com"
             }
         ],
-        
+        "buttons":["Log In Now","Verify My Account"],
         "subject": [
             "Your Internet Service is Changing",            
             "Changes to your internet service",
@@ -280,13 +280,12 @@ const templates = {
                 ],
                 [
                     "If you do not complete the transfer your existing account will eventually be disabled and you will lose access to your email and internet service.",
-                    "Your existing email account will be temporarily paused until you complete the transfer ot ensure emails are not lost during the transfer.",
+                    "Your existing email account will be temporarily paused until you complete the transfer to ensure emails are not lost during the transfer.",
                 ],
                 [
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your account and re-activate your service.",
-                    "Click <a href=\"%URL%\">here</a> to log in and verify your identity and account.",
-                    "Click the button below to log in<br><a href=\"%URL%\" class='btn btn-primary'>Log In Now</a>",
-                    "Click the button to complete the verification<br><a href=\"%URL%\" class='btn btn-primary'>Verify My Account</a>",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your account and re-activate your service.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and verify your identity and account.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>"
                 ],
                 [
                     "%URGENCYBOTTOM%"
