@@ -194,7 +194,7 @@ class VirtualEmailServer {
      * @param string emailAddress - email address to create
      * @param JSONOBject config - base configuration of account, i.e categories, etc.
      */
-    createAccount(emailAddress, config = default_config) {
+    createAccount(emailAddress, config = default_config, sendWelcome=true) {
         if (!(emailAddress in this.accounts)) {
             const account = new Account(emailAddress, config);
             this.#addAccount(account);
@@ -202,12 +202,14 @@ class VirtualEmailServer {
             localStorage.setItem("sccs_current", emailAddress);
 
             this._store();
-            const builder = new EmailBuilder();
-            builder.setFromName("Training Email Service").setFromAddress("training@example.com").setTo(emailAddress).setSubject("Welcome to the Training Email Service").setMessage("Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
-            //welcomeEmail.init("Training Email Service", emailAddress, "Welcome to the Training Email Service", "Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
-            const welcomeEmail = new Email(builder);
-            
-            this.receiveEmail(welcomeEmail);
+            if(sendWelcome){
+                const builder = new EmailBuilder();
+                builder.setFromName("Training Email Service").setFromAddress("training@example.com").setTo(emailAddress).setSubject("Welcome to the Training Email Service").setMessage("Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
+                //welcomeEmail.init("Training Email Service", emailAddress, "Welcome to the Training Email Service", "Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
+                const welcomeEmail = new Email(builder);
+                
+                this.receiveEmail(welcomeEmail);
+            }
         } else {
             alert("Email account already exists");
         }
@@ -1194,8 +1196,10 @@ function storageChanged(evt) {
 /**
  * Go back function within the email UI
  */
-function goback() {
-    
+function goback(skipTest=false) {
+    if(!skipTest && !checkSafeToMove(undefined,true)){
+        return;
+    }
     document.getElementById("email-list").classList.remove("d-none");
     document.getElementById("email-list").classList.add("d-block");
     document.getElementById("email-viewer").classList.add("d-none");

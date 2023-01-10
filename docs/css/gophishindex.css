@@ -46,3 +46,27 @@
     border-bottom-style:solid;
     margin-bottom: 3px;
 }
+.accordion-button.collapsed {
+    background: var(--bs-pink)
+  }
+.accordion-item {
+    border:1px solid rgba(0,0,0,.125);
+}
+#uploading {
+    width:100px;
+    height:100px;
+    margin: 0 auto;
+}
+#uploading i {
+    font-size:100px;
+    
+}
+#uploading-success {
+    color:green;
+}
+#uploading-failure {
+    color:red;
+}
+#uploading-spinner {
+    color:gray;
+}

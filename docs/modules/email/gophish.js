@@ -75,11 +75,15 @@ class GoPhish {
         for (var i = 0; i < genCount; i++) {
             //emailGenerator.constructEmail("shopping",target);
             
-            const eb = emailGenerator.constructEmail(emailGenerator.randomItem(templateNames), target);//new EmailBuilder();
+            //const eb = emailGenerator.constructEmail(emailGenerator.randomItem(templateNames), target);//new EmailBuilder();
             //const emailContent = document.createElement("div");
             //emailContent.innerHTML = "<h3 class='selectable'>Welcome to my email</h3><p class='selectable sccs-should-select' data-explain='Explanation: Imprecise to field'>To someone</p><p class='selectable sccs-should-select' data-explain='Explanation: Overly friendly comment' >I hope this email finds your well.</p><p class='selectable'>" + "This is a short message number " + i.toString() + "</p><a class='selectable sccs-should-select' data-explain='Explanation: Address and URL do not match' href='https://www.google.com'>www.bing.com</a><p class='selectable'>your sincereely</p><p class='selectable'>bob</p>";
             //eb.setFromAddress("alice@example.com").setFromName("Alice").setTo(target).setSubject("Message " + i.toString()).setMessage(emailContent).setHeader("reply-to", "test@example.com").setHeader("mailing-list", false)
             //eb.setHeader("_suspicious", ["_To", "_From"]);
+            var eb=null;
+            while(eb==null){
+                eb = emailGenerator.constructEmail(emailGenerator.randomItem(templateNames), target);//new EmailBuilder();    
+            }
             const email = new Email(eb);
             //email.init({name:"Alice",address:"alice@example.com"}, "bob@example.com", "Message " + i.toString(), "This is a short message number " + i.toString(),undefined,undefined,{"reply-to":"test@example.com"});
             virtualEmailServer.receiveEmail(email);
@@ -235,7 +239,19 @@ class EmailGenerator extends Generator {
         eb.setTo(target);
         eb.setHeader("mailing-list", false);
         eb.setMessage(emailContent);
-        return eb;
+        var isNull =true;
+        for(var i=0;i<claimed.length;i++){
+            if(claimed[i]!=null){
+                isNull = false;
+                break;
+            }
+        }
+        if(isNull){
+            alert("Null Email Generated");
+            return null;
+        }else{
+            return eb;
+        }
         //emailContent.innerHTML = "<h3 class='selectable'>Welcome to my email</h3><p class='selectable sccs-should-select' data-explain='Explanation: Imprecise to field'>To someone</p><p class='selectable sccs-should-select' data-explain='Explanation: Overly friendly comment' >I hope this email finds your well.</p><p class='selectable'>"+"This is a short message number " + i.toString() +"</p><a class='selectable sccs-should-select' data-explain='Explanation: Address and URL do not match' href='https://www.google.com'>www.bing.com</a><p class='selectable'>your sincereely</p><p class='selectable'>bob</p>";
         //eb.setFromAddress("alice@example.com").setFromName("Alice").setTo(target).setSubject("Message " + i.toString()).setMessage(emailContent).setHeader("reply-to", "test@example.com").setHeader("mailing-list", false)
         //eb.setHeader("_suspicious", ["_To", "_From"]);

@@ -318,6 +318,7 @@ function loadGoPhish() {
     document.getElementById("profile-title").innerText = name + "'s Profile";
     goPhishGame = new GoPhishGame();
     goPhishGame.refresh();
+    goPhishGame.setCurrentEmail(null);
     const emailTaskList = document.getElementById("email-task-list");
     const emailIds = goPhishGame.getEmails();
     for (var i = 0; i < emailIds.length; i++) {
@@ -371,11 +372,13 @@ function loadGoPhish() {
         item.innerText = profileStringsList[x];
         profileList.appendChild(item);
     }
-    updateProgress();
+    updateProgress(true);
 
 }
-function loadEmail(id) {
-
+function loadEmail(id, skipCheck=false) {
+    if(!skipCheck && !checkSafeToMove(id)){
+        return;
+    }
     goPhishEmailAccount.getEmailByUid(id).renderContents();
     document.getElementById("emailContentsBody").scrollTop =0;
     updateProgress();
