@@ -1,5 +1,5 @@
 const go_phish_config = {
-    "emailsToGenerate": 10,
+    "emailsToGenerate": 8,
     "maxSuspiciousElements":4,
     "minimumSuspiciousElements":1,
     "suspiciousGenerators":[

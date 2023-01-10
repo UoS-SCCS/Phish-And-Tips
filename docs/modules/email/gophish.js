@@ -239,15 +239,16 @@ class EmailGenerator extends Generator {
         eb.setTo(target);
         eb.setHeader("mailing-list", false);
         eb.setMessage(emailContent);
+        console.log("Claimed:");
+        console.log(claimed);
         var isNull =true;
         for(var i=0;i<claimed.length;i++){
-            if(claimed[i]!=null){
+            if(claimed[i]!=undefined){
                 isNull = false;
                 break;
             }
         }
         if(isNull){
-            alert("Null Email Generated");
             return null;
         }else{
             return eb;
@@ -496,7 +497,9 @@ class SpellingGrammarGenerator extends Generator {
                 }
 
             }
-            claimed[idx] = this;
+            if(changesMade>0){
+                claimed[idx] = this;
+            }
         }
         return changesMade;
     }
