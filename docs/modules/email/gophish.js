@@ -163,9 +163,14 @@ class EmailGenerator extends Generator {
             const subjectSpellingGenerator = new SubjectSpellingGrammarGenerator();
             subjectSpellingGenerator.init(true);
             const subjectArr = [this.randomItem(template.subject)];
+            const originalSubject = subjectArr[0];
             subjectSpellingGenerator.processContent(0,subjectArr,[]);
             eb.setSubject(subjectArr[0]);
-            subjectSpellingGenerator.processHeaders(eb);
+            if(subjectArr[0]!=originalSubject){
+                console.log(subjectArr[0] + "!=" + originalSubject);
+                subjectSpellingGenerator.processHeaders(eb);
+            }
+            
         }else{
             const subject = this.randomItem(template.subject);
             eb.setSubject(subject);
@@ -724,6 +729,7 @@ class SubjectSpellingGrammarGenerator extends SpellingGrammarGenerator {
     format(content) {
         return;
     }
+   
     processHeaders(eb) {
         if (this.isSuspicious) {
             eb.appendToHeader("_suspicious", "_Subject");
