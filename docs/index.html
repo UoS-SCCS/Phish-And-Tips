@@ -81,6 +81,18 @@
                                 By clicking Next through the following screens you will be guided through setting up
                                 your training email account. After that you will start the lesson.
                             </p>
+                            <p><label for="participantId">Please enter your participant ID below:</label> </p>
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control text-left bg-white"
+                                            style="text-align: left;" id="participantId" placeholder="Enter Participant ID"
+                                            aria-label="Participant ID" 
+                                            title="Please enter your participant ID here"
+                                            autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
                             <p><strong>Click Next to get started!</strong></p>
 
                         </div>
@@ -92,8 +104,7 @@
                             onclick="createNewGoPhishTrainingAccount();return false;" href="#"
                             class="btn btn-primary">Create
                             New Phish and Tips! Training Account</a></p>
-
-                    <a class="btn btn-primary" href="#emailintro" role="button">Next</a>
+                    <a class="btn btn-primary" href="#emailintro" onclick="return checkParticipantId(event);" role="button">Next</a>
                 </div>
             </section>
 
@@ -154,12 +165,12 @@
                 </div>
             </section>
 
-            <div id="popoverHelp" class="sticky-top fa-parent"
+           <!-- <div id="popoverHelp" class="sticky-top fa-parent"
                 style="padding-top:10px;display:inline-block;margin-left:-1000px;left:10px;" data-bs-toggle="popover"
                 data-bs-html="true" data-bs-content="" data-bs-title="Phish and Tips" data-bs-placement="bottom">
                 <i class="fas fa-question-circle fa-hover-beat"
                     style="color:rgba(var(--bs-primary-rgb));font-size:48pt"></i>
-            </div>
+            </div>-->
 
             <section id="emailcomplete" class="text-center min-vh-100">
                 <hr class="my-5">

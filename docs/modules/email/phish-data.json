@@ -221,8 +221,8 @@ const templates = {
         }
     },
     "isp_changes": {
-        "category":"Internet Service Provider",
-        "profileStrings":["Internet from BigISP.com"],
+        "category":"Internet/Broadband Provider",
+        "profileStrings":["Internet/Broadband from BigISP.com"],
         "senders": [
             {
                 "fakeName": "BigISP.com",
@@ -252,16 +252,16 @@ const templates = {
         "buttons":["Log In Now","Verify My Account"],
         "subject": [
             "Your Internet Service is Changing",            
-            "Changes to your internet service",
+            "Changes to your Internet service",
             "New Internet Service Account",
-            "Important changes to how you access the internet"
+            "Important changes to how you access the Internet"
         ],
         "content": {
             "urgency": [
                 "THIS IS NOT SPAM - PLEASE DO NOT IGNORE.",
                 "ACTION REQUIRED!",
-                "Your internet access may be interrupted if you do not act now.",
-                "If you do not respond your internet service will be suspended."
+                "Your Internet access may be interrupted if you do not act now.",
+                "If you do not respond your Internet service will be suspended."
             ],
             "lines": [
                 [
@@ -276,10 +276,10 @@ const templates = {
                 [
                     "We are updating our current broadband service to a new all fibre network. As part of this upgrade we will be migrating existing customers to our new fibre service. To complete the transfer you need to log in to your account and accept the new terms.",
                     "As part of efforts to streamline our service we have partnered with BigEmail.com to provide a new improved email service. We will be transferring all existing customer over to the new service in the next 6 months. To complete the transfer please complete the account verification step with our new provider, after which your existing email account will be transferred.",
-                    "We have recently made some changes to how you manage your internet service with us. You will now need to login via a new website and URL. To complete the transfer please verify your account details on the new website.",
+                    "We have recently made some changes to how you manage your Internet service with us. You will now need to login via a new website and URL. To complete the transfer please verify your account details on the new website.",
                 ],
                 [
-                    "If you do not complete the transfer your existing account will eventually be disabled and you will lose access to your email and internet service.",
+                    "If you do not complete the transfer your existing account will eventually be disabled and you will lose access to your email and Internet service.",
                     "Your existing email account will be temporarily paused until you complete the transfer to ensure emails are not lost during the transfer.",
                 ],
                 [
@@ -293,6 +293,211 @@ const templates = {
                 [
                     "Best Regards<br><br>%NAME%",
                     "Thank You<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Faithfully<br><br>%NAME%"
+                ],              
+            ]
+        }
+    },
+    "utilities_change_supplier": {
+        "category":"Utilities",
+        "profileStrings":["Gas from UKGas.com"],
+        "senders": [
+            {
+                "fakeName": "UKGas.com",
+                "realName": "UKGas Customer Service",
+                "emailAddress": "service@ukgas.com",
+                "replyAddress": "service@yourgas.com",
+                "fakeWebAddress": "https://www.ukgas.com",
+                "realWebAddress": "https://ukgas.gasonline.com"
+            },
+            {
+                "fakeName": "UKGas.com Accounts",
+                "realName": "UKGas Customer Service",
+                "emailAddress": "service@ukgas.com",
+                "replyAddress": "service@welkjrw.com",
+                "fakeWebAddress": "https://www.ukgas.com",
+                "realWebAddress": "https://ukgas.welkjrw.com"
+            }
+        ],
+        "buttons":["Log In Now","Access Your Account"],
+        "subject": [
+            "Notification of Change of Supplier",            
+            "Changes to your Gas Supply"
+        ],
+        "content": {
+            "urgency": [
+                "YOUR SUPPLY AGREEMENT IS CHANGING - PLEASE READ",
+                "SUPPLY AGREEMENT CHANGES - PLEASE REVIEW",
+                "Your gas supply may be interrupted if you do not act."
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "We have received a notification from Global Gas that you wish to change your supplier to Global Gas. If this is correct you do not need to do anything further. If you did not make this request you must login and notify us that you do not wish to proceed with the transfer.",
+                    "Your current supply agreement is due to end shortly. If you have already made arrangements for a new supply agreement with an alternative provider you do not need to do anything. If you would like to renew your current supply agreement you must login and notify us."
+                    
+                ],
+                [
+                    "If you do not login and notify us your current supply agreement will terminate shortly.",
+                    "If you do not notify us differently your current agreement will automatically terminate."
+                ],
+                [
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in to your account and notify us of any changes.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>"
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",
+                    "Best Wishes<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Faithfully<br><br>%NAME%"
+                ],              
+            ]
+        }
+    },
+    "utilities_changes": {
+        "category":"Utilities",
+        "profileStrings":["Gas from UKGas.com"],
+        "senders": [
+            {
+                "fakeName": "UKGas.com",
+                "realName": "UKGas Customer Service",
+                "emailAddress": "service@ukgas.com",
+                "replyAddress": "service@yourgas.com",
+                "fakeWebAddress": "https://www.ukgas.com",
+                "realWebAddress": "https://ukgas.gasonline.com"
+            },
+            {
+                "fakeName": "UKGas.com Accounts",
+                "realName": "UKGas Customer Service",
+                "emailAddress": "service@ukgas.com",
+                "replyAddress": "service@welkjrw.com",
+                "fakeWebAddress": "https://www.ukgas.com",
+                "realWebAddress": "https://ukgas.welkjrw.com"
+            }
+        ],
+        "buttons":["Log In Now","Access Your Account"],
+        "subject": [
+            "Notification of Change of Supplier",            
+            "Meter Reading Request",
+            "Changes to your Gas Supply"
+        ],
+        "content": {
+            "urgency": [
+                "URGENT - ACTION NEEDED",
+                "ACTION REQUIRED - DO NOT IGNORE",
+                "Your gas supply may be terminated if you do not act."
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "Your gas supplier is changing. UK Gas is ceasing its retail operations and will be transferring all its existing customers to alternative suppliers. Please login to your account to select a new supplier.",
+                    "Your existing supply agreement is ceasing. You need to select an alternative supply agreement from UK Gas or select an alternative supplier to transfer to."
+                    
+                ],
+                [
+                    "If you do not select an alternative supplier agreement your gas supply will be terminated. ",
+                    "If no alternative arrangements are made your gas supply will be terminated.",
+                ],
+                [
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and select a new supplier agreement.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and notify us how you wish to proceed.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>"
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",
+                    "Thank You<br><br>%NAME%",
+                    "Yours Sincerely<br><br>%NAME%",
+                    "Yours Faithfully<br><br>%NAME%"
+                ],              
+            ]
+        }
+    },
+    "tv_licensing": {
+        "category":"Government",
+        "profileStrings":["TV License from TelevisionUK.com"],
+        "senders": [
+            {
+                "fakeName": "Television UK Enforcement",
+                "realName": "Television UK Enforcement Notice",
+                "emailAddress": "enforcement@televisionuk.com",
+                "replyAddress": "enforcement@teleonline.com",
+                "fakeWebAddress": "https://www.televisionuk.com",
+                "realWebAddress": "https://licensing.teleonline.com"
+            },
+            {
+                "fakeName": "Enforcement Team Television UK",
+                "realName": "Enforcement Team Television UK",
+                "emailAddress": "enforcement_team@televisionuk.com",
+                "replyAddress": "enforcement_team@asiwlwls.com",
+                "fakeWebAddress": "https://www.televisionuk.com",
+                "realWebAddress": "https://licensing.asiwlwls.com"
+            }
+        ],
+        "buttons":["Renew My License","Purchase License"],
+        "subject": [
+            "Enforcement Notification",            
+            "Notification of Enforcement Action",
+            "Enforcement Investigation"
+        ],
+        "content": {
+            "urgency": [
+                "URGENT - RESPONSE REQUIRED",
+                "FAILURE TO ACT COULD RESULT IN PROSECUTION",
+                "If you ignore this notification you could face criminal prosecution"
+            ],
+            "lines": [
+                [
+                    "Dear %RECIPIENT%,",
+                    "To %RECIPIENT%,",
+                    "Hi %RECIPIENT%,",
+                    "%RECIPIENT%,"
+                ],
+                [
+                    "%URGENCYTOP%"
+                ],
+                [
+                    "Our enforcement team has detected a device at your address has been consuming licensed streaming services without an appropriate license. You must have a television license to watch terrestrial as well as online content, including streaming services from licensed providers. Our records do not show a current license for your property.",
+                    "We have detected the consumption of licensed content taking place at your address in the absence of an appropriate television license."
+                    
+                ],
+                [
+                    "We understand during these difficult times that mistakes and oversights occur. If you have forgotten to renew your license please login below and purchase a new license.",
+                    "You can purchase an appropriately backdated license by clicking the link below to avoid further action being taken.",
+                ],
+                [
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to purchase an appropriate license.",
+                    "Click <a href=\"%URL%\" >%VISIBLEURL%</a> to log in and notify us how you wish to proceed.",
+                    "<a href=\"%URL%\" class='%LINKCLASS%'>%VISIBLEURL%</a>"
+                ],
+                [
+                    "%URGENCYBOTTOM%"
+                ],
+                [
+                    "Best Regards<br><br>%NAME%",                    
                     "Yours Sincerely<br><br>%NAME%",
                     "Yours Faithfully<br><br>%NAME%"
                 ],              

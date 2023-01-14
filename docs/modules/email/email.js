@@ -368,7 +368,7 @@ class Email {
     }
 
     renderHeader(){
-        console.log("Render Header called");
+        //console.log("Render Header called");
     }
     /**
      * Render the contents of this email into the appropriate location
@@ -424,7 +424,7 @@ class Email {
                 if(sHeader.startsWith("_")){
                     
                     if(sHeader =="_From"){
-                        console.log("Adding should-select to header");
+                        //console.log("Adding should-select to header");
                         document.getElementById("emailContents" + sHeader.substr(1)).parentElement.classList.add("sccs-should-select");
                         if("_suspicious-explain_From" in this.headers){
                             document.getElementById("emailContents" + sHeader.substr(1)).parentElement.dataset.explain = this.headers["_suspicious-explain_From"];
@@ -1094,6 +1094,7 @@ class Account {
                     }
                 }
                 if (unreadCount !== previousUnreadCount) {
+                    //console.log("unreadCount:" + unreadCount + " - Previous:" + previousUnreadCount);
                     showNewEmailToast("Inbox");
 
                 }
@@ -1114,6 +1115,7 @@ class Account {
                 }
 
                 if (unreadCount !== previousUnreadCount) {
+                    //console.log("unreadCount:" + unreadCount + " - Previous:" + previousUnreadCount);
                     showNewEmailToast("Inbox");
 
                 }

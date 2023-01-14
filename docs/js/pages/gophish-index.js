@@ -94,6 +94,7 @@ function configureGoPhishAccount(evt) {
             return false;
         } else {
             virtualEmailServer.createAccount(accountName + "@example.com",undefined,false);
+            
             document.getElementById("newAccount").innerText = accountName + "@example.com";
             localStorage.setItem("sccs_gophish_current", accountName + "@example.com");
             loadAccountsList(accountName + "@example.com");
@@ -125,6 +126,10 @@ function generateGoPhishEmails(evt) {
     }
     goPhishGame = new GoPhishGame();
     goPhishGame.refresh();
+    if(goPhishGame.getField("participantId",null)==null){
+        goPhishGame.setField("participantId",document.getElementById("participantId").value);
+    }
+    
     if (!goPhishGame.hasEmails()) {
         goPhishGame.generateEmails(emailCats);
     }
@@ -206,7 +211,7 @@ function showTrainingLanding() {
     popContents.appendChild(emailButton);
 
 
-
+    /**
     popover = new bootstrap.Popover(document.getElementById("popoverHelp"), {
         container: 'body',
         content: popContents,
@@ -231,13 +236,14 @@ function showTrainingLanding() {
         });
     });
 
-
+     */
     if (currentUser !== null) {
         //addressHolder.innerText = currentUser;
         accountName.value = currentUser.substr(0, currentUser.indexOf("@"));
         document.getElementById("newAccount").innerText = currentUser;
 
     }
+    document.getElementById("participantId").value = goPhishGame.getField("participantId","");
     var accounts = goPhishGame.getConfigAccounts();
     if (!(window.location.hash.length)) {
         if (accounts.length > 1 || (accounts.length > 0 && currentUser === null)) {
@@ -316,6 +322,15 @@ function showTrainingLanding() {
     //}
 
     updateTrainingList();
+}
+function checkParticipantId(){
+    const participantId = document.getElementById("participantId");
+    if(participantId.value.length>0){
+        return true;
+    }else{
+        alert("Please enter a participant ID to continue");
+        return false;
+    }
 }
 function checkCatSelection() {
     var checkElems = document.querySelectorAll('input[type="checkbox"].cat-select-checkbox');
@@ -491,7 +506,7 @@ function submitData() {
     }).then((res) => {
         document.getElementById("uploading-spinner").classList.add("d-none");
         document.getElementById("uploading-success").classList.remove("d-none");
-        console.log(res);
+        //console.log(res);
 
     }).catch((error) => {
         console.log(error);

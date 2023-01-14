@@ -140,7 +140,7 @@ function tryAgain() {
 function moveNext() {
     var params = "";
     if(inError){
-        console.log(pupConfig.getPreviousStep());
+        //console.log(pupConfig.getPreviousStep());
         window.location = "index.html#traininglist"
         return;
     }

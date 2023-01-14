@@ -45,10 +45,10 @@ function hidePopUp(evt) {
     if (evt.target.id !== "popoverHelp") {
         popover.hide()
     }
-    console.log("hidePopUp:" + evt.target.id);
+    //console.log("hidePopUp:" + evt.target.id);
     
     if (evt.target.id !== "popoverHeader" && popoverHeader != null) {
-        console.log("hidePopUp2");
+        //console.log("hidePopUp2");
         //popoverHeader.hide()
         //popoverHeader.dispose();
         //popoverHeader =null;
@@ -208,7 +208,7 @@ function prepHeaderPopover(email) {
         trigger: 'focus',
         template: '<div class="popover sccs-popover-headers" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
     });
-    console.log(popoverHeader);
+    //console.log(popoverHeader);
     document.getElementById("popoverHeader").addEventListener('shown.bs.popover', function () {
         
         //document.getElementById("popoverHeader").addEventListener('click', hidePopHeader);
@@ -225,7 +225,7 @@ function prepHeaderPopover(email) {
     })
 }
 function hidePopHeader(){
-    console.log("hide called");
+    //console.log("hide called");
     popoverHeader.hide();
 }
 
@@ -512,10 +512,10 @@ function scoreSelectable(forceReScore = false) {
             });
         }
     }
-    console.log("CorrectCount:" + correctCount);
-    console.log("MissedCount:" + missedCount);
-    console.log("IncorrectCOunt:" + incorrectCount);
-    console.log("TargetCount:" + targetCount);
+    //console.log("CorrectCount:" + correctCount);
+    //console.log("MissedCount:" + missedCount);
+    //console.log("IncorrectCOunt:" + incorrectCount);
+    //console.log("TargetCount:" + targetCount);
     if (!reloadScore) {
         scoreObj = new GoPhishGameScore();
         scoreObj.init(targetCount, correctCount, incorrectCount, missedCount);
@@ -524,7 +524,7 @@ function scoreSelectable(forceReScore = false) {
     }
 
     
-    console.log(feedbackPops);
+    //console.log(feedbackPops);
 
     //for(var i=0;i<feedbackPops.length;i++){
     //    feedbackPops[i].show();
