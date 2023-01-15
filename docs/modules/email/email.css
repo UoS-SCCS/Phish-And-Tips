@@ -543,6 +543,13 @@ body {
     height: calc(100vh - 240px);
     padding:1px;
 }
+@media(hover:none){
+    .sccs-email-body-div {
+        overflow-y:scroll;
+        height: calc(100vh - 260px);
+        padding:1px;
+    }   
+    }
 .sccs-padding-col {
     padding-right:0px;
 }
