@@ -92,8 +92,9 @@ class GoPhish {
             const email = new Email(eb);
             //email.init({name:"Alice",address:"alice@example.com"}, "bob@example.com", "Message " + i.toString(), "This is a short message number " + i.toString(),undefined,undefined,{"reply-to":"test@example.com"});
             virtualEmailServer.receiveEmail(email);
-            
+            console.log("Sent Email");
             emailIds.push(email.uid);
+            console.log("Added ID");
         }
         return emailIds;
     }

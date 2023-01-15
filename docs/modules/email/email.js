@@ -251,7 +251,9 @@ class VirtualEmailServer {
      * @param Email email - email to add, should be to an account that exist on the server
      */
     receiveEmail(email) {
+        console.log("In receive email");
         if (email.to in this.accounts) {
+            console.log(email);
             this.getAccount(email.to).receiveEmail(email);
             this._store();
         } else {
@@ -330,7 +332,9 @@ class Email {
          * to generate random unique IDs.
          */
         if (this.uid === null) {
+            console.log("Setting UUID");
             this.uid = crypto.randomUUID();
+            console.log("Set UUID:" + this.uid);
         }
     }
     /**
@@ -750,6 +754,7 @@ class Account {
      * @param Email email   email object to be received
      */
     receiveEmail(email) {
+        console.log("In account receive email");
         if (email.to !== this.emailAddress) {
             throw new EmailError("Invalid to address in received email");
         }
