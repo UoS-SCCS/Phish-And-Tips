@@ -301,7 +301,7 @@ function prependZero(value){
     }
     return value;
 }
-
+var backupUUID = 1;
 /**
  * Email object that represents a single email
  */
@@ -331,9 +331,16 @@ class Email {
          * This is currently unused - if we need unique IDs uncomment
          * to generate random unique IDs.
          */
-        if (this.uid === null) {
+        if (this.uid === null) { 
             console.log("Setting UUID");
-            this.uid = crypto.randomUUID();
+            if (typeof crypto.randomUUID === "function") {
+                this.uid = crypto.randomUUID();
+                
+            }else{
+                this.uid = backupUUID;
+                backupUUID = backupUUID + 1;
+            }
+            
             console.log("Set UUID:" + this.uid);
         }
     }
