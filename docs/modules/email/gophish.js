@@ -86,10 +86,13 @@ class GoPhish {
             var eb=null;
             while(eb==null){
                 eb = emailGenerator.constructEmail(wrg.getRandomItem(), target);//new EmailBuilder();    
+                console.log(JSON.stringify(eb));
             }
+            console.log("Generated Email");
             const email = new Email(eb);
             //email.init({name:"Alice",address:"alice@example.com"}, "bob@example.com", "Message " + i.toString(), "This is a short message number " + i.toString(),undefined,undefined,{"reply-to":"test@example.com"});
             virtualEmailServer.receiveEmail(email);
+            
             emailIds.push(email.uid);
         }
         return emailIds;
