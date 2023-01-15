@@ -101,7 +101,8 @@ var currentEmailObject = null;
  *                              after the render, if null will default to inbox
  */
 function renderEmail(emailAddress = null,selectedCat=null) {
-
+    console.log("In render email");
+    
     const urlParams = new URLSearchParams(window.location.search);
     currentEmailAccount = urlParams.get("email");
     if (currentEmailObject !== null) {
@@ -117,7 +118,7 @@ function renderEmail(emailAddress = null,selectedCat=null) {
             (currentEmailObject = virtualEmailServer.getAccount(currentEmailAccount)).render(selectedCat);
         }
     }
-
+    console.log(JSON.stringify(currentEmailObject));
 }
 
 
