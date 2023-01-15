@@ -59,10 +59,12 @@ class GoPhish {
         return emailIds;
     }
     generateEmails(count = null, target, emailCats) {
+        
         var genCount = count
         if (count == null) {
             genCount = this.config["emailsToGenerate"];
         }
+        console.log("Generate Email:" + genCount);
         var emailIds = [];
         const emailGenerator = new EmailGenerator();
         
@@ -71,7 +73,7 @@ class GoPhish {
         if(!emailCats.includes("All")){
             templateNames = templateNames.filter(function(e) { return  emailCats.includes(templates[e].category)})
         }
-        //console.log(templateNames);
+        console.log(templateNames);
         const wrg = new WeightedRandomGenerator(templateNames);
         for (var i = 0; i < genCount; i++) {
             //emailGenerator.constructEmail("shopping",target);
