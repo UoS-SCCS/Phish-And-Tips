@@ -64,7 +64,7 @@ class GoPhish {
         if (count == null) {
             genCount = this.config["emailsToGenerate"];
         }
-        console.log("Generate Email:" + genCount);
+        //console.log("Generate Email:" + genCount);
         var emailIds = [];
         const emailGenerator = new EmailGenerator();
         
@@ -73,7 +73,7 @@ class GoPhish {
         if(!emailCats.includes("All")){
             templateNames = templateNames.filter(function(e) { return  emailCats.includes(templates[e].category)})
         }
-        console.log(templateNames);
+        //console.log(templateNames);
         const wrg = new WeightedRandomGenerator(templateNames);
         for (var i = 0; i < genCount; i++) {
             //emailGenerator.constructEmail("shopping",target);
@@ -86,15 +86,15 @@ class GoPhish {
             var eb=null;
             while(eb==null){
                 eb = emailGenerator.constructEmail(wrg.getRandomItem(), target);//new EmailBuilder();    
-                console.log(JSON.stringify(eb));
+                //console.log(JSON.stringify(eb));
             }
-            console.log("Generated Email");
+            //console.log("Generated Email");
             const email = new Email(eb);
             //email.init({name:"Alice",address:"alice@example.com"}, "bob@example.com", "Message " + i.toString(), "This is a short message number " + i.toString(),undefined,undefined,{"reply-to":"test@example.com"});
             virtualEmailServer.receiveEmail(email);
-            console.log("Sent Email");
+            //console.log("Sent Email");
             emailIds.push(email.uid);
-            console.log("Added ID");
+            //console.log("Added ID");
         }
         return emailIds;
     }
@@ -173,7 +173,7 @@ class EmailGenerator extends Generator {
             subjectSpellingGenerator.processContent(0,subjectArr,[]);
             eb.setSubject(subjectArr[0]);
             if(subjectArr[0]!=originalSubject){
-                console.log(subjectArr[0] + "!=" + originalSubject);
+                //console.log(subjectArr[0] + "!=" + originalSubject);
                 subjectSpellingGenerator.processHeaders(eb);
             }
             
@@ -249,6 +249,8 @@ class EmailGenerator extends Generator {
             }
             selectedContent[i] = textLine;
         }
+        //console.log("SelectedContent:");
+        //console.log(selectedContent);
         for (var i = 0; i < selectedContent.length; i++) {
             for (var j = 0; j < generators.length; j++) {
                 generators[j].processContent(i, selectedContent, claimed);
@@ -713,6 +715,7 @@ class SpellingGrammarGenerator extends Generator {
 
     }
     format(content) {
+        //console.log("format Spelling:" + content);
         const pElem = document.createElement("p");
         pElem.innerHTML = content;
         pElem.classList.add("selectable");
@@ -808,6 +811,7 @@ class SenderGenerator extends Generator {
         this._gen_name = "Sender";
         this.isSuspicious = false;
         this.placeholderName = "%NAME%";
+        this.regEx = new RegExp('(%\\S+%)');
     }
     init(suspicious) {
         if (this._gen_name in suspicious && suspicious[this._gen_name]) {
@@ -828,8 +832,14 @@ class SenderGenerator extends Generator {
         }
     }
     format(content) {
-        return;
-        //We never claim any lines so shouldn't process them 
+        //console.log("generic generator:" + content);
+        if (!this.regEx.test(content)) {
+            const pElem = document.createElement("p");
+            pElem.innerHTML = content;
+            pElem.classList.add("selectable");
+            return pElem;
+        }
+        return null;
     }
     processHeaders(eb) {
         if (this.isSuspicious) {
@@ -852,6 +862,7 @@ class GenericGenerator extends Generator {
         this.regEx = new RegExp('(%\\S+%)');
     }
     format(content) {
+        //console.log("generic generator:" + content);
         if (!this.regEx.test(content)) {
             const pElem = document.createElement("p");
             pElem.innerHTML = content;

@@ -118,7 +118,7 @@ function renderEmail(emailAddress = null,selectedCat=null) {
             (currentEmailObject = virtualEmailServer.getAccount(currentEmailAccount)).render(selectedCat);
         }
     }
-    console.log(JSON.stringify(currentEmailObject));
+    //console.log(JSON.stringify(currentEmailObject));
 }
 
 
@@ -251,9 +251,9 @@ class VirtualEmailServer {
      * @param Email email - email to add, should be to an account that exist on the server
      */
     receiveEmail(email) {
-        console.log("In receive email");
+        //console.log("In receive email");
         if (email.to in this.accounts) {
-            console.log(email);
+            //console.log(email);
             this.getAccount(email.to).receiveEmail(email);
             this._store();
         } else {
@@ -332,7 +332,7 @@ class Email {
          * to generate random unique IDs.
          */
         if (this.uid === null) { 
-            console.log("Setting UUID");
+            //console.log("Setting UUID");
             if (typeof crypto.randomUUID === "function") {
                 this.uid = crypto.randomUUID();
                 
@@ -341,7 +341,7 @@ class Email {
                 backupUUID = backupUUID + 1;
             }
             
-            console.log("Set UUID:" + this.uid);
+            //console.log("Set UUID:" + this.uid);
         }
     }
     /**
@@ -761,7 +761,7 @@ class Account {
      * @param Email email   email object to be received
      */
     receiveEmail(email) {
-        console.log("In account receive email");
+        //console.log("In account receive email");
         if (email.to !== this.emailAddress) {
             throw new EmailError("Invalid to address in received email");
         }
