@@ -256,16 +256,17 @@ input[type=number] {
 .video-container {
     /* Used to position the overlay */
     position: relative;
+    width:100%;
 }
 
 .play-button-container {
     /* Position */
-    left: 0;
+    left: 0px;
     position: absolute;
     top: 0;
 
     /* Take full size */
-    height: 100%;
+    height:360px;
     width: 100%;
 
     /* Center the content */
@@ -274,7 +275,7 @@ input[type=number] {
     justify-content: center;
 
     /* Add a dark background */
-    background-color: rgba(0, 0, 0, 0.25);
+   
 }
 .play-button:hover i{
     color: white;
