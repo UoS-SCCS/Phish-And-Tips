@@ -86,10 +86,9 @@
                                 <div class="col-md-8">
                                     <div class="input-group mb-3">
                                         <input type="text" class="form-control text-left bg-white"
-                                            style="text-align: left;" id="participantId" placeholder="Enter Participant ID"
-                                            aria-label="Participant ID" 
-                                            title="Please enter your participant ID here"
-                                            autocomplete="off">
+                                            style="text-align: left;" id="participantId"
+                                            placeholder="Enter Participant ID" aria-label="Participant ID"
+                                            title="Please enter your participant ID here" autocomplete="off">
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +103,8 @@
                             onclick="createNewGoPhishTrainingAccount();return false;" href="#"
                             class="btn btn-primary">Create
                             New Phish and Tips! Training Account</a></p>
-                    <a class="btn btn-primary" href="#emailintro" onclick="return checkParticipantId(event);" role="button">Next</a>
+                    <a class="btn btn-primary" href="#emailintro" onclick="return checkParticipantId(event);"
+                        role="button">Next</a>
                 </div>
             </section>
 
@@ -165,7 +165,7 @@
                 </div>
             </section>
 
-           <!-- <div id="popoverHelp" class="sticky-top fa-parent"
+            <!-- <div id="popoverHelp" class="sticky-top fa-parent"
                 style="padding-top:10px;display:inline-block;margin-left:-1000px;left:10px;" data-bs-toggle="popover"
                 data-bs-html="true" data-bs-content="" data-bs-title="Phish and Tips" data-bs-placement="bottom">
                 <i class="fas fa-question-circle fa-hover-beat"
@@ -234,16 +234,17 @@
                             <p>The exercise requires you to select suspicious parts of the email. You can do that by
                                 click or touching the parts of
                                 the email that you believe are suspicious. An example is shown below:</p>
-                                <div class="video-container">
-                                <video id="videoObj" onclick="playPause(event)" onplay="hideButton()" onpause="showButton()" width="640" height="360" controls>
-                                <source src="./imgs/intro.mp4" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                            <div id="playButtonOverlay" class="play-button-container" onclick="playPause(event)">
-                                <!-- The player button -->
-                                <div class="play-button"><i class="fa fa-play-circle"></i></div>
+                            <div class="video-container">
+                                <video id="videoObj" onclick="playPause(event)" onplay="hideButton()"
+                                    onpause="showButton()" onended="exitFullscreen()" width="640" height="360" controls>
+                                    <source src="./imgs/intro.mp4" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <div id="playButtonOverlay" class="play-button-container" onclick="playPause(event)">
+                                    <!-- The player button -->
+                                    <div class="play-button"><i class="fa fa-play-circle"></i></div>
+                                </div>
                             </div>
-                        </div>
                             <!--<p>If you would like further help click <a href="">Here</a></p>-->
 
                         </div>
@@ -262,205 +263,225 @@
 
                 <div class="shadow p-3 mb-5 bg-light text-black  rounded">
                     <!-- Heading -->
-                    <h2 class="mb-3 font-weight-bold">Training Summary</h2>
+                    <!--<h2 class="mb-3 font-weight-bold">Training Summary</h2>->
 
                     <!-accordion-flush-Grid row-->
-                        <div class="row d-flex justify-content-center mb-4">
+                    <div class="row d-flex justify-content-center mb-4">
 
-                            <!--Grid column-->
-                            <div class="col-md-8">
+                        <!--Grid column-->
+                        <div class="col-md-8">
 
-                                <!-- Description -->
+                            <!-- Description -->
 
-                                <p>Congratulations! You've completed the Phish and Tips training exercise. Below you
+                            <p><strong>Congratulations! You've completed the Phish and Tips training exercise.</strong>
+                            </p>
+                            <!--Below you
                                     will find further information on the different types of suspicious content you may
                                     have seen whilst completing the training. Click or touch the heading too see more
-                                    information.
-                                </p>
-                                <p>Once you've finished reading please click the Next button, where we will collect some
-                                    usage information and provide an opportunity for you to restart the training if you
-                                    wish to have another go.
-                                </p>
-                                <div class="accordion " id="accordionExample">
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingOne">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                data-bs-target="#collapseOne" aria-expanded="true"
-                                                aria-controls="collapseOne">
-                                                Training Summary
-                                            </button>
-                                        </h2>
-                                        <div id="collapseOne" class="accordion-collapse collapse show"
-                                            aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body text-start">
-                                                <p>The aim of the training was to encourage you to look at emails as a
-                                                    series of smaller parts and to evaluate each one separately. You may
-                                                    have seen examples of content we have labelled as suspicious in
-                                                    legitimate emails. This is to be expected to some degree.</p>
-                                                <p>Phishers and scammers look to replicate legitimate emails. A
-                                                    legitimate company may send you an email with an urgent message,
-                                                    whilst a
-                                                    phisher will use urgent language to try to drive you towards their
-                                                    scam website. This is one of the biggest challenges when evaluating
-                                                    phishing emails.</p>
-                                                <p>As such, the objective is not to classify the email as a whole, but
-                                                    to encourage better risk evaluation. If you see one or more
-                                                    suspicious parts to an email it does not necessarily mean the email
-                                                    is a scam or phishing email, but it should encourage greater caution
-                                                    and investigation on your part. If you are uncertain about whether
-                                                    an email is legitimate do not hesitate to check with the company
-                                                    directly or ask friends or relatives for their opinion.</p>
+                                    information.-->
 
-                                                <p>When
-                                                    checking with a company make sure to use known good contact details,
-                                                    for example, visit the website using a previously saved bookmark or
-                                                    contact via a phone number from a previous bill, statement or
-                                                    correspondence. In particular, do not use the contact details, links
-                                                    or web addresses in the suspicious email itself as these may be part
-                                                    of the scam. </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingTwo">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                aria-expanded="false" aria-controls="collapseTwo">
-                                                Spelling and Grammar Errors
-                                            </button>
-                                        </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse"
-                                            aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body text-start">
-                                                <p>It is not uncommon to see spelling or grammar errors in phishing and
-                                                    scam emails. This is primarily due to the writers not being native
-                                                    English speakers. If you see spelling or grammar errors in an
-                                                    email it is a strong indicator that the email may not be legitimate,
-                                                    and requires additional caution.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingThree">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                aria-expanded="false" aria-controls="collapseThree">
-                                                Urgent Language
-                                            </button>
-                                        </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse"
-                                            aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body  text-start">
-                                                <p>The objective of most phishers and scammers is to get you to take an
-                                                    action you would not normally take, for example, visiting a
-                                                    different website or providing your login details. They do this by
-                                                    creating a sense of urgency through techniques like threatening a
-                                                    service is about to terminate, you are about to lose access to data or
-                                                    an account, or that an opportunity is about to be missed.</p>
-                                                <p> Such
-                                                    urgent language should raise suspicion but cannot be entirely
-                                                    excluded from legitimate emails. Unfortunately many legitimate
-                                                    companies are seeking to get you to take action as well, for
-                                                    example, visiting their site, buying a product from them, or signing
-                                                    up for new services. This can be one of the most difficult to
-                                                    distinguish, but in general, if you feel a sense of urgency take a
-                                                    moment to evaluate in more detail the email and if there are any
-                                                    doubts, contact the company directly to determine if the email is
-                                                    legitimate.</p>
-                                                <p>Do not be concerned about contacting a company directly to check. You
-                                                    are not wasting their time. If they are sending emails that are
-                                                    difficult to distinguish from phishing and scam emails then that is
-                                                    their own fault and they should be doing better.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingFour">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                                aria-expanded="false" aria-controls="collapseFour">
-                                                Hidden or disguised links
-                                            </button>
-                                        </h2>
-                                        <div id="collapseFour" class="accordion-collapse collapse"
-                                            aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body  text-start">
-                                                <p>Phishing and scam emails will often look to disguise or hide the
-                                                    address of the website they are trying to get you to visit. There
-                                                    are a number of ways they can do this, ranging from registering
-                                                    similar looking or sounding addresses through to hiding the link
-                                                    behind a button or different text, for example, the text "Click
-                                                    Here".</p>
-                                                <p> You can see where a link is going to go to by hovering over
-                                                    it with your mouse and looking in the bottom left hand corner of the
-                                                    screen. It will show you where the link points to, which may be
-                                                    different to what is written in the text. Always check this value to
-                                                    make sure it is the address you expect and know for the company
-                                                    claiming to be the sender of the email address.</p>
-                                                <p>If it is different
-                                                    or looks unusual do not click the link. Visit the company directly
-                                                    using a known good link, for example, a bookmark or website address
-                                                    included in a previous bill or statement. If in doubt contact the
-                                                    company directly to check. </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
-                                        <h2 class="accordion-header" id="headingFive">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                                aria-expanded="false" aria-controls="collapseFive">
-                                                Fake From Address
-                                            </button>
-                                        </h2>
-                                        <div id="collapseFive" class="accordion-collapse collapse"
-                                            aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body  text-start">
-                                                <p>Phishers and scammers will exploit weaknesses in how email addresses
-                                                    are displayed to make an email look like it came from a different
-                                                    address - normally a reputable company or organisation - rather than
-                                                    the scammer's real address. Many email providers are wise to this and
-                                                    mark such emails as spam, but it is worth being aware of in case a
-                                                    scam email gets through</p>
-                                                <p>To verify the <b>From:</b> address look at the headers of the email.
-                                                    In the case of the GMail this can be accessed by clicking the
-                                                    downwards arrow next to your name or address in the email header.
-                                                    This will show the additional headers, including the reply-to and
-                                                    possibly sender header. If these do not match the <b>From:</b>
-                                                    address it could be a scammer impersonating someone else.</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="accordion-item">
+                            <p>Once you've finished reading please click the Next button, where we will collect some
+                                usage information and provide an opportunity for you to restart the training if you wish
+                                to have another go.
+                            </p>
+                            <div><strong>Training Summary</strong></div>
+                            <p>The aim of the training was to encourage you to look at emails as a series of smaller
+                                parts and to evaluate each one separately. You saw a range of tricks that phishers can
+                                use to try to catch you out:
+                                <div style="margin:0 auto; text-align:left;max-width:90%">
+                            <ul>
+                                <li><strong>Spelling:</strong> It is not uncommon to see spelling or grammar errors in
+                                    phishing and scam emails.</li>
+                                <li><strong>Urgent Language:</strong> Phishers may try create a sense or urgency, to get
+                                    you to act before you realise it’s a scam.</li>
+                                <li><strong>Hidden or Disguised Links:</strong> Phishers may hide disguised addresses in
+                                    links or buttons to get you to visit a fake site. Always check the link first!</li>
+                                <li><strong>From Fake Address:</strong> Always check the address to see if they the
+                                    person who sent it is who they say they are!</li>
+                                <li><strong>Generic Greeting:</strong> Phishers may not know your actual name, so use
+                                    very general greetings. </li>
+                            </ul>
+                            </div>
+                            </p>
+                            <div class="accordion " id="accordionExample">
+                                <!--<div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">
+                                            Training Summary
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body text-start">
+                                            <p>The aim of the training was to encourage you to look at emails as a
+                                                series of smaller parts and to evaluate each one separately. You may
+                                                have seen examples of content we have labelled as suspicious in
+                                                legitimate emails. This is to be expected to some degree.</p>
+                                            <p>Phishers and scammers look to replicate legitimate emails. A
+                                                legitimate company may send you an email with an urgent message,
+                                                whilst a
+                                                phisher will use urgent language to try to drive you towards their
+                                                scam website. This is one of the biggest challenges when evaluating
+                                                phishing emails.</p>
+                                            <p>As such, the objective is not to classify the email as a whole, but
+                                                to encourage better risk evaluation. If you see one or more
+                                                suspicious parts to an email it does not necessarily mean the email
+                                                is a scam or phishing email, but it should encourage greater caution
+                                                and investigation on your part. If you are uncertain about whether
+                                                an email is legitimate do not hesitate to check with the company
+                                                directly or ask friends or relatives for their opinion.</p>
 
-                                        <h2 class="accordion-header" id="headingSize">
-                                            <button class="accordion-button collapsed" type="button"
-                                                data-bs-toggle="collapse" data-bs-target="#collapseSix"
-                                                aria-expanded="false" aria-controls="collapseSix">
-                                                Generic Greeting
-                                            </button>
-                                        </h2>
-                                        <div id="collapseSix" class="accordion-collapse collapse"
-                                            aria-labelledby="headingSix" data-bs-parent="#accordionExample">
-                                            <div class="accordion-body  text-start">
-                                                <p>Scammers and Phishers may not know your actual name, they may only
-                                                    have your email address. They still need to provide a greeting in
-                                                    the email so will often pick generic greetings, for example, <b>Dear
-                                                        Valued Customer</b> or <b>To Our Newest VIP Member</b>. These
-                                                    are designed to be flattering whilst still being entirely generic.
-                                                </p>
+                                            <p>When
+                                                checking with a company make sure to use known good contact details,
+                                                for example, visit the website using a previously saved bookmark or
+                                                contact via a phone number from a previous bill, statement or
+                                                correspondence. In particular, do not use the contact details, links
+                                                or web addresses in the suspicious email itself as these may be part
+                                                of the scam. </p>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                            aria-expanded="false" aria-controls="collapseTwo">
+                                            Spelling and Grammar Errors
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body text-start">
+                                            <p>It is not uncommon to see spelling or grammar errors in phishing and
+                                                scam emails. This is primarily due to the writers not being native
+                                                English speakers. If you see spelling or grammar errors in an
+                                                email it is a strong indicator that the email may not be legitimate,
+                                                and requires additional caution.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                            aria-expanded="false" aria-controls="collapseThree">
+                                            Urgent Language
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body  text-start">
+                                            <p>The objective of most phishers and scammers is to get you to take an
+                                                action you would not normally take, for example, visiting a
+                                                different website or providing your login details. They do this by
+                                                creating a sense of urgency through techniques like threatening a
+                                                service is about to terminate, you are about to lose access to data or
+                                                an account, or that an opportunity is about to be missed.</p>
+                                            <p> Such
+                                                urgent language should raise suspicion but cannot be entirely
+                                                excluded from legitimate emails. Unfortunately many legitimate
+                                                companies are seeking to get you to take action as well, for
+                                                example, visiting their site, buying a product from them, or signing
+                                                up for new services. This can be one of the most difficult to
+                                                distinguish, but in general, if you feel a sense of urgency take a
+                                                moment to evaluate in more detail the email and if there are any
+                                                doubts, contact the company directly to determine if the email is
+                                                legitimate.</p>
+                                            <p>Do not be concerned about contacting a company directly to check. You
+                                                are not wasting their time. If they are sending emails that are
+                                                difficult to distinguish from phishing and scam emails then that is
+                                                their own fault and they should be doing better.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                            aria-expanded="false" aria-controls="collapseFour">
+                                            Hidden or disguised links
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse"
+                                        aria-labelledby="headingFour" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body  text-start">
+                                            <p>Phishing and scam emails will often look to disguise or hide the
+                                                address of the website they are trying to get you to visit. There
+                                                are a number of ways they can do this, ranging from registering
+                                                similar looking or sounding addresses through to hiding the link
+                                                behind a button or different text, for example, the text "Click
+                                                Here".</p>
+                                            <p> You can see where a link is going to go to by hovering over
+                                                it with your mouse and looking in the bottom left hand corner of the
+                                                screen. It will show you where the link points to, which may be
+                                                different to what is written in the text. Always check this value to
+                                                make sure it is the address you expect and know for the company
+                                                claiming to be the sender of the email address.</p>
+                                            <p>If it is different
+                                                or looks unusual do not click the link. Visit the company directly
+                                                using a known good link, for example, a bookmark or website address
+                                                included in a previous bill or statement. If in doubt contact the
+                                                company directly to check. </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFive">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                            aria-expanded="false" aria-controls="collapseFive">
+                                            Fake From Address
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFive" class="accordion-collapse collapse"
+                                        aria-labelledby="headingFive" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body  text-start">
+                                            <p>Phishers and scammers will exploit weaknesses in how email addresses
+                                                are displayed to make an email look like it came from a different
+                                                address - normally a reputable company or organisation - rather than
+                                                the scammer's real address. Many email providers are wise to this and
+                                                mark such emails as spam, but it is worth being aware of in case a
+                                                scam email gets through</p>
+                                            <p>To verify the <b>From:</b> address look at the headers of the email.
+                                                In the case of the GMail this can be accessed by clicking the
+                                                downwards arrow next to your name or address in the email header.
+                                                This will show the additional headers, including the reply-to and
+                                                possibly sender header. If these do not match the <b>From:</b>
+                                                address it could be a scammer impersonating someone else.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
 
-                                            </div>
+                                    <h2 class="accordion-header" id="headingSize">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseSix"
+                                            aria-expanded="false" aria-controls="collapseSix">
+                                            Generic Greeting
+                                        </button>
+                                    </h2>
+                                    <div id="collapseSix" class="accordion-collapse collapse"
+                                        aria-labelledby="headingSix" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body  text-start">
+                                            <p>Scammers and Phishers may not know your actual name, they may only
+                                                have your email address. They still need to provide a greeting in
+                                                the email so will often pick generic greetings, for example, <b>Dear
+                                                    Valued Customer</b> or <b>To Our Newest VIP Member</b>. These
+                                                are designed to be flattering whilst still being entirely generic.
+                                            </p>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-                        <a class="btn btn-primary" href="#finish" onclick="return submitData(event);"
-                            role="button">Next</a>
-                        <!--Grid column-->
+
+
+                    </div>
+                    <a class="btn btn-primary" href="#finish" onclick="return submitData(event);" role="button">Next</a>
+                    <!--Grid column-->
 
                 </div>
             </section>
@@ -481,8 +502,8 @@
                         <div class="col-md-8">
 
                             <!-- Description -->
-                            <p>Thank you for taking part in our focus groups. We are uploading some statistics from your
-                                of the training platform. Once the green tick is shown you can click Next and have
+                            <p>Thank you for taking part in our focus groups. We are uploading some statistics from the
+                                training platform. Once the green tick is shown you can click Next and have
                                 another go or finish the training and clear your data.</p>
                             <p>If you see a red cross or the spinner dots do not disappear after a few seconds please
                                 inform a facilitator.</p>

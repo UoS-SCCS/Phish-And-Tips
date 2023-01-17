@@ -553,3 +553,15 @@ function playPause(evt){
     evt.stopPropagation();
     evt.preventDefault();
 }
+function exitFullscreen(){
+    
+        if (document.exitFullscreen) {
+            document.exitFullscreen(); // Standard
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen(); // Blink
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen(); // Gecko
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen(); // Old IE
+        }
+    }
