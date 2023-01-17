@@ -533,3 +533,23 @@ function generateQRCode() {
     });
     return true;
 }
+function hideButton(){
+    const overlay = document.getElementById("playButtonOverlay");
+    overlay.classList.add("d-none");
+    
+}
+function showButton(){
+    const overlay = document.getElementById("playButtonOverlay");
+    overlay.classList.remove("d-none");
+    
+}
+function playPause(evt){
+    const videoObj = document.getElementById("videoObj");
+    if(videoObj.paused){
+        videoObj.play();
+    }else{
+        videoObj.pause();
+    }
+    evt.stopPropagation();
+    evt.preventDefault();
+}

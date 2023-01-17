@@ -234,10 +234,16 @@
                             <p>The exercise requires you to select suspicious parts of the email. You can do that by
                                 click or touching the parts of
                                 the email that you believe are suspicious. An example is shown below:</p>
-                            <video width="640" height="360" controls>
+                                <div class="video-container">
+                                <video id="videoObj" onclick="playPause(event)" onplay="hideButton()" onpause="showButton()" width="640" height="360" controls>
                                 <source src="./imgs/intro.mp4" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
+                            <div id="playButtonOverlay" class="play-button-container" onclick="playPause(event)">
+                                <!-- The player button -->
+                                <div class="play-button"><i class="fa fa-play-circle"></i></div>
+                            </div>
+                        </div>
                             <!--<p>If you would like further help click <a href="">Here</a></p>-->
 
                         </div>

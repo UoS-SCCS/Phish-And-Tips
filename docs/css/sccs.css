@@ -252,3 +252,44 @@ input[type=number] {
     text-decoration: underline;
  
 }
+
+.video-container {
+    /* Used to position the overlay */
+    position: relative;
+}
+
+.play-button-container {
+    /* Position */
+    left: 0;
+    position: absolute;
+    top: 0;
+
+    /* Take full size */
+    height: 100%;
+    width: 100%;
+
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+
+    /* Add a dark background */
+    background-color: rgba(0, 0, 0, 0.25);
+}
+.play-button:hover i{
+    color: white;
+    
+}
+.play-button {
+    height: 5rem;
+    width: 5rem;
+    cursor:pointer;
+    /* Center the content */
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+.play-button i {
+    font-size:5rem;
+    color:#c52b6f;
+}
