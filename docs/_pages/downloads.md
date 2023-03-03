@@ -12,13 +12,13 @@ This page contains links to download the learning materials and the training sit
 ## User Guide
 The user guide contains a walkthrough of screenshots and explanations of how to use the training site.
 
-<a href="https://github.com/UoS-SCCS/PUPS/releases/download/{{ page.release }}/PracticeUsingPasswords-LearningMaterials.zip" class="btn btn--primary"><i class="fas fa-download"></i>&nbsp;Download Learning Materials</a>
+<a href="" disabled class="btn btn--primary"><i class="fas fa-download"></i>&nbsp;Download Learning Materials</a>
 
 
 ## Training Site
 Training Site that provides a safe practical environment for users to practice evaluating example emails that may be suspicious.
 
-<a href="https://github.com/UoS-SCCS/PUPS/releases/download/{{ page.release }}/PracticeUsingPasswords-TrainingSite.zip" class="btn btn--primary"><i class="fas fa-download"></i>&nbsp;Download Training Site</a>
+<a href="" disabled class="btn btn--primary"><i class="fas fa-download"></i>&nbsp;Download Training Site</a>
 
 
 
