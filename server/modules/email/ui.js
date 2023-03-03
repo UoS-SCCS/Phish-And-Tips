@@ -45,9 +45,10 @@ function hidePopUp(evt) {
     if (evt.target.id !== "popoverHelp") {
         popover.hide()
     }
-    console.log("hidePopUp:" + evt.target.id);
+    //console.log("hidePopUp:" + evt.target.id);
+    
     if (evt.target.id !== "popoverHeader" && popoverHeader != null) {
-        console.log("hidePopUp2");
+        //console.log("hidePopUp2");
         //popoverHeader.hide()
         //popoverHeader.dispose();
         //popoverHeader =null;
@@ -207,17 +208,27 @@ function prepHeaderPopover(email) {
         trigger: 'focus',
         template: '<div class="popover sccs-popover-headers" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
     });
-    console.log(popoverHeader);
-    /**    document.getElementById("popoverHeader").addEventListener('shown.bs.popover', function () {
+    //console.log(popoverHeader);
+    document.getElementById("popoverHeader").addEventListener('shown.bs.popover', function () {
+        
+        //document.getElementById("popoverHeader").addEventListener('click', hidePopHeader);
+        
+    });
+    document.getElementById("popoverHeader").addEventListener('hidden.bs.popover', function () {
+        //document.getElementById("popoverHeader").removeEventListener("click",hidePopHeader);
+        
+    });
     
-    
-        });
-     */
+
     document.getElementById("popoverHeader").addEventListener('click', function (evt) {
         //evt.stopPropagation();
+        
     })
 }
-
+function hidePopHeader(){
+    //console.log("hide called");
+    popoverHeader.hide();
+}
 
 /**
  * Prepare the help icon popover that provides access to training
@@ -246,6 +257,16 @@ function prepPopover() {
 
     divMb.appendChild(addressHolder);
     popContents.appendChild(divMb);
+    const helpButtonDiv = document.createElement("div");
+    helpButtonDiv.className="mb-3";
+    const helpButton = document.createElement("a");
+    helpButton.className = "btn btn-info";
+    helpButton.href = "#";
+    helpButton.role = "button";
+    helpButton.innerText = "Show Instructions";
+    helpButton.id = "openHelpBtnPop"
+    helpButtonDiv.appendChild(helpButton);
+    popContents.appendChild(helpButtonDiv);
     const emailButton = document.createElement("a");
     emailButton.className = "btn btn-info";
     emailButton.href = "#";
@@ -267,6 +288,10 @@ function prepPopover() {
             popover.hide()
             return openTraining();
         });
+        document.getElementById("openHelpBtnPop").addEventListener("click", function () {
+            popover.hide()
+            return showWelcomeModal();
+        });
     });
     document.getElementById("popoverHelp").addEventListener('click', function (evt) {
         evt.stopPropagation();
@@ -278,7 +303,9 @@ function prepPopover() {
  * @returns false
  */
 function openTraining() {
-    if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
+    window.location = "../../index.html";
+    
+    /**if (navigator.userAgent.toLowerCase().indexOf('firefox') > -1) {
         window.open("", "SCCSPasswordTraining");
     }
 
@@ -287,7 +314,7 @@ function openTraining() {
     if ('GestureEvent' in window && !showniOSWarning) {
         alert("Safari on iOS currently blocks tab switching from within the page. Please manually switch tabs.");
         showniOSWarning = true
-    }
+    }**/
     return false;
 
 }
@@ -486,10 +513,10 @@ function scoreSelectable(forceReScore = false) {
             });
         }
     }
-    console.log("CorrectCount:" + correctCount);
-    console.log("MissedCount:" + missedCount);
-    console.log("IncorrectCOunt:" + incorrectCount);
-    console.log("TargetCount:" + targetCount);
+    //console.log("CorrectCount:" + correctCount);
+    //console.log("MissedCount:" + missedCount);
+    //console.log("IncorrectCOunt:" + incorrectCount);
+    //console.log("TargetCount:" + targetCount);
     if (!reloadScore) {
         scoreObj = new GoPhishGameScore();
         scoreObj.init(targetCount, correctCount, incorrectCount, missedCount);
@@ -498,7 +525,7 @@ function scoreSelectable(forceReScore = false) {
     }
 
     
-    console.log(feedbackPops);
+    //console.log(feedbackPops);
 
     //for(var i=0;i<feedbackPops.length;i++){
     //    feedbackPops[i].show();
@@ -517,8 +544,8 @@ function scoreSelectable(forceReScore = false) {
     updateProgress();
 }
 var currentMoveNextModal = null;
-
-function updateProgress(){
+var welcomeModal = null;
+function updateProgress(isLoading=false){
     const progressElem = document.getElementById("overall-progress");
     const total = goPhishGame.getEmails().length;
     const checked = goPhishGame.getCheckedCount();
@@ -546,9 +573,16 @@ function scoreNextEmailTask(){
     }else if(total>checked && goPhishGame.getNextEmailId() !=null){
         moveNextEmailTask();
     }else if(total >= checked){
-        window.location ="./index.html";
+        window.location ="../../index.html#trainingsummary";
     }
     
+}
+function showWelcomeModal(){
+    const options = {};
+    options["backdrop"] = "static";
+    options["keyboard"] = false;
+    welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'), options)
+    welcomeModal.show();
 }
 function moveNextEmailTask() {
     const nextId = goPhishGame.getNextEmailId();
@@ -569,6 +603,38 @@ function moveNextEmailTask() {
     }
 
 }
+var targetMoveEmailId=null;
+function checkSafeToMove(targetUid,toInbox=false){
+    const currentId = goPhishGame.getCurrentEmail();
+    targetMoveEmailId = targetUid;
+        if (!goPhishGame.isChecked(currentId) && currentId != null) {
+            const options = {};
+            options["backdrop"] = "static";
+            options["keyboard"] = false;
+            if(toInbox){
+                currentMoveNextModal = new bootstrap.Modal(document.getElementById('listWithoutScoreModal'), options)
+                currentMoveNextModal.show();                
+            }else{
+                currentMoveNextModal = new bootstrap.Modal(document.getElementById('nextWithoutScoreModal'), options)
+                currentMoveNextModal.show();  
+            }
+            return false;
+        } else {
+            return true;
+        }
+        //
+    
+}
+function contReturn(){
+    if (currentMoveNextModal != null) {
+
+        currentMoveNextModal.hide();
+
+        currentMoveNextModal = null;
+    }
+    goPhishGame.setCurrentEmail(null);
+    goback(true);
+}
 function contMoveNext() {
     if (currentMoveNextModal != null) {
 
@@ -576,9 +642,10 @@ function contMoveNext() {
 
         currentMoveNextModal = null;
     }
-    const nextId = goPhishGame.getNextEmailId();
-    if (nextId != null) {
-        loadEmail(nextId);
+    
+    //const nextId = goPhishGame.getNextEmailId();
+    if (targetMoveEmailId != null) {
+        loadEmail(targetMoveEmailId,true);
     }
 }
 function scoreCurrentFirst() {
@@ -590,7 +657,13 @@ function scoreCurrentFirst() {
     scoreSelectable();
 }
 
-
+function closeWelcome() {
+    if (welcomeModal != null) {
+        welcomeModal.hide();
+        welcomeModal = null;
+    }
+    
+}
 
 function showCorrect() {
 

@@ -38,11 +38,17 @@ goPhishGame.refresh();
  * @returns false
  */
 function resetTraining() {
-    const result = window.confirm("Are you sure you want to reset your training progress?\n\nThis will clear your current training progress and allow you to try all the training again.");
+    const result = window.confirm("Are you sure you want to reset your training progress?\n\nThis will clear your current training data and allow you to try again.");
     if (result) {
-        window.location = "index.html#traininglist";
-
-
+        const currentacc = window.localStorage.getItem("sccs_gophish_current");
+        virtualEmailServer.delete(window.localStorage.getItem("sccs_gophish_current"));
+        goPhishGame.clear();
+        window.localStorage.removeItem("sccs_gophish_current");
+        virtualEmailServer.createAccount(currentacc, undefined, false);
+        document.getElementById("newAccount").innerText = currentacc;
+        localStorage.setItem("sccs_gophish_current", currentacc);
+        loadAccountsList(currentacc);
+        window.location = "index.html#emailcomplete";
     }
     return false;
 }
@@ -61,8 +67,10 @@ function finish() {
         server.delete(window.localStorage.getItem("sccs_gophish_current"));
         goPhishGame.clear();
         window.localStorage.removeItem("sccs_gophish_current");
+        window.localStorage.removeItem("__sccs_user_config");
+        window.localStorage.removeItem("sccs_current");
+
         loadAccountsList(null);
-        closeEmailWindow();
 
         window.location = "index.html#introduction";
         window.location.reload();
@@ -82,13 +90,17 @@ function configureGoPhishAccount(evt) {
         if (accountName === null || accountName === "") {
             alert("You need to enter a name for your account");
             return false;
+        } else if (localStorage.getItem("sccs_gophish_current") != null) {
+            alert("An existing account is already active. Either reset the existing account using the button at the bottom of the page to start the training again, or click the \"Create New Phish and Tips! Training Account\" button at the top of page to create a new account.");
+            return false;
         } else {
-            virtualEmailServer.createAccount(accountName + "@example.com");
+            virtualEmailServer.createAccount(accountName + "@example.com", undefined, false);
+
             document.getElementById("newAccount").innerText = accountName + "@example.com";
             localStorage.setItem("sccs_gophish_current", accountName + "@example.com");
             loadAccountsList(accountName + "@example.com");
 
-            
+
             return true;
         }
     } else {
@@ -97,25 +109,29 @@ function configureGoPhishAccount(evt) {
         document.getElementById("accountName").classList.add("invalid");
     }
 }
-function generateGoPhishEmails(evt){
+function generateGoPhishEmails(evt) {
 
     var checkElems = document.querySelectorAll('input[type="checkbox"].cat-select-checkbox');
     var emailCats = [];
-    if(document.getElementById("EmailCatAll").checked){
+    if (document.getElementById("EmailCatAll").checked) {
         emailCats.push("All");
-    }else{
-        for(var x=0;x<checkElems.length;x++){
-            if(checkElems[x].id=="EmailCatAll"){
+    } else {
+        for (var x = 0; x < checkElems.length; x++) {
+            if (checkElems[x].id == "EmailCatAll") {
                 continue;
             }
-            if(checkElems[x].checked){
+            if (checkElems[x].checked) {
                 emailCats.push(checkElems[x].value);
             }
         }
     }
     goPhishGame = new GoPhishGame();
     goPhishGame.refresh();
-    if(!goPhishGame.hasEmails()){
+    if (goPhishGame.getField("participantId", null) == null) {
+        goPhishGame.setField("participantId", document.getElementById("participantId").value);
+    }
+
+    if (!goPhishGame.hasEmails()) {
         goPhishGame.generateEmails(emailCats);
     }
 }
@@ -145,7 +161,17 @@ function showTrainingLanding() {
         document.getElementById("createNewHolder").classList.remove("d-none");
         document.getElementById("createNewHolder").classList.add("d-block");
     }
-
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
+        //Show Focus Group UI
+        const fgElems = document.getElementsByClassName("focus-group");
+        for(var i=0;i<fg-elems.length;i++){
+            fgElems[i].classList.remove("focus-group");
+        }
+        const nonFgElems = document.getElementsByClassName("non-focus-group");
+        for(var i=0;i<nonFgElems.length;i++){
+            nonFgElems[i].style.display = "none";
+        }
+    }
     const popContents = document.createElement("div");
     popContents.id = "popcontents";
     popContents.className = "help-popover text-black";
@@ -196,7 +222,7 @@ function showTrainingLanding() {
     popContents.appendChild(emailButton);
 
 
-
+    /**
     popover = new bootstrap.Popover(document.getElementById("popoverHelp"), {
         container: 'body',
         content: popContents,
@@ -221,13 +247,14 @@ function showTrainingLanding() {
         });
     });
 
-
+     */
     if (currentUser !== null) {
         //addressHolder.innerText = currentUser;
         accountName.value = currentUser.substr(0, currentUser.indexOf("@"));
         document.getElementById("newAccount").innerText = currentUser;
 
     }
+    document.getElementById("participantId").value = goPhishGame.getField("participantId", "");
     var accounts = goPhishGame.getConfigAccounts();
     if (!(window.location.hash.length)) {
         if (accounts.length > 1 || (accounts.length > 0 && currentUser === null)) {
@@ -258,43 +285,43 @@ function showTrainingLanding() {
     const categories = document.getElementById("category-selection");
     const templateNames = Object.keys(templates);
     const setObj = {};
-    for(var x=0;x<templateNames.length;x++){
-        setObj[templates[templateNames[x]].category]=true;
+    for (var x = 0; x < templateNames.length; x++) {
+        setObj[templates[templateNames[x]].category] = true;
     }
-    
+
     var checkDiv = document.createElement("div");
-    checkDiv.className="all-check-div";
+    checkDiv.className = "all-check-div";
     var checkBoxElem = document.createElement("input");
-    checkBoxElem.type="checkbox";
-    checkBoxElem.value="All";
-    checkBoxElem.name="EmailCatAll";
-    checkBoxElem.checked=true;
-    checkBoxElem.id="EmailCatAll";
+    checkBoxElem.type = "checkbox";
+    checkBoxElem.value = "All";
+    checkBoxElem.name = "EmailCatAll";
+    checkBoxElem.checked = true;
+    checkBoxElem.id = "EmailCatAll";
     checkBoxElem.className = "form-check-input cat-select-checkbox";
-    checkBoxElem.addEventListener("click",selectAllCats);
+    checkBoxElem.addEventListener("click", selectAllCats);
     var labelElem = document.createElement("label");
-    labelElem.htmlFor ="EmailCatAll";
-    labelElem.innerText="All";
+    labelElem.htmlFor = "EmailCatAll";
+    labelElem.innerText = "All";
     labelElem.className = "form-check-label cat-select-label";
     checkDiv.appendChild(checkBoxElem);
     checkDiv.appendChild(labelElem);
     categories.appendChild(checkDiv);
     const catNames = Object.keys(setObj);
-    for(var x=0;x<catNames.length;x++){
+    for (var x = 0; x < catNames.length; x++) {
         var checkDiv = document.createElement("div");
-    
+
         var catName = catNames[x];
         var checkBoxElem = document.createElement("input");
-        checkBoxElem.type="checkbox";
-        checkBoxElem.value=catName;
+        checkBoxElem.type = "checkbox";
+        checkBoxElem.value = catName;
         checkBoxElem.id = "EmailCat" + catName;
-        checkBoxElem.name="EmailCat" + catName;
-        checkBoxElem.checked=true;
+        checkBoxElem.name = "EmailCat" + catName;
+        checkBoxElem.checked = true;
         checkBoxElem.className = "form-check-input cat-select-checkbox";
         checkBoxElem.addEventListener("click", checkCatSelection);
         var labelElem = document.createElement("label");
-        labelElem.htmlFor ="EmailCat" + catName;
-        labelElem.innerText=catName;
+        labelElem.htmlFor = "EmailCat" + catName;
+        labelElem.innerText = catName;
         labelElem.className = "form-check-label cat-select-label";
         checkDiv.appendChild(checkBoxElem);
         checkDiv.appendChild(labelElem);
@@ -307,39 +334,54 @@ function showTrainingLanding() {
 
     updateTrainingList();
 }
-function checkCatSelection(){
+function checkParticipantId() {
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
+
+        const participantId = document.getElementById("participantId");
+        if (participantId.value.length > 0) {
+            return true;
+        } else {
+            alert("Please enter a participant ID to continue");
+            return false;
+        }
+    } else {
+        //No participant ID so pass the check
+        return true;
+    }
+}
+function checkCatSelection() {
     var checkElems = document.querySelectorAll('input[type="checkbox"].cat-select-checkbox');
-    var checkCount=0;
-    var totalCount=0;
-    for(var x=0;x<checkElems.length;x++){
-        if(checkElems[x].id=="EmailCatAll"){
+    var checkCount = 0;
+    var totalCount = 0;
+    for (var x = 0; x < checkElems.length; x++) {
+        if (checkElems[x].id == "EmailCatAll") {
             continue;
         }
         totalCount++;
-        if(checkElems[x].checked){
+        if (checkElems[x].checked) {
             checkCount++;
         }
     }
-    if(checkCount==totalCount){
-        document.getElementById("EmailCatAll").indeterminate=false;
-        document.getElementById("EmailCatAll").checked=true;
-    }else if(checkCount==0){
-        document.getElementById("EmailCatAll").checked=false;
-        document.getElementById("EmailCatAll").indeterminate=false;
-    }else{
-        document.getElementById("EmailCatAll").checked=false;
-        document.getElementById("EmailCatAll").indeterminate=true;            
+    if (checkCount == totalCount) {
+        document.getElementById("EmailCatAll").indeterminate = false;
+        document.getElementById("EmailCatAll").checked = true;
+    } else if (checkCount == 0) {
+        document.getElementById("EmailCatAll").checked = false;
+        document.getElementById("EmailCatAll").indeterminate = false;
+    } else {
+        document.getElementById("EmailCatAll").checked = false;
+        document.getElementById("EmailCatAll").indeterminate = true;
     }
 
 }
-function selectAllCats(){
+function selectAllCats() {
     const checkValue = document.getElementById("EmailCatAll").checked;
     var checkElems = document.querySelectorAll('input[type="checkbox"].cat-select-checkbox');
-    for(var x=0;x<checkElems.length;x++){
-        if(checkElems[x].id=="EmailCatAll"){
+    for (var x = 0; x < checkElems.length; x++) {
+        if (checkElems[x].id == "EmailCatAll") {
             continue;
         }
-        checkElems[x].checked=checkValue;
+        checkElems[x].checked = checkValue;
     }
 }
 /**
@@ -424,8 +466,124 @@ function updateTrainingList() {
  * Create a new training account by clearing the current config
  */
 function createNewGoPhishTrainingAccount() {
-    goPhishGame.createNew(base_page_config);
-    window.location = "#introduction";
-    window.location.reload(true);
+    const result = window.confirm("Are you sure you want to create a new Phish and Tips! training account?\n\nThis will clear your current training progress and allow you to try all the training again.");
+    if (result) {
 
+        window.localStorage.removeItem("sccs_email");
+        window.localStorage.removeItem("__sccs_gophish");
+        window.localStorage.removeItem("__sccs_config");
+        window.localStorage.removeItem("__sccs_gophish_user_config");
+        window.localStorage.removeItem("__sccs_user_config");
+
+        window.localStorage.removeItem("sccs_current");
+        window.localStorage.removeItem("sccs_gophish_current");
+
+
+        window.location = "index.html";
+
+
+    }
+    return false;
+
+
+
+}
+function exportData() {
+    var outputObj = {}
+    outputObj["__sccs_gophish"] = JSON.parse(window.localStorage.getItem("__sccs_gophish"));
+    outputObj["__sccs_gophish_user_config"] = JSON.parse(window.localStorage.getItem("__sccs_gophish_user_config"));
+    var currentAccountName = window.localStorage.getItem("sccs_gophish_current");
+    var emailAccounts = JSON.parse(window.localStorage.getItem("sccs_email"));
+    outputObj["emailAccount"] = emailAccounts["accounts"][currentAccountName];
+    var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(outputObj));
+    var dlAnchorElem = document.createElement("a");
+    dlAnchorElem.setAttribute("href", dataStr);
+    dlAnchorElem.setAttribute("download", "data.json");
+    dlAnchorElem.click();
+}
+function submitData() {
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
+    document.getElementById("uploading-spinner").classList.remove("d-none");
+    var outputObj = {}
+    outputObj["__sccs_gophish"] = JSON.parse(window.localStorage.getItem("__sccs_gophish"));
+    outputObj["__sccs_gophish_user_config"] = JSON.parse(window.localStorage.getItem("__sccs_gophish_user_config"));
+    var currentAccountName = window.localStorage.getItem("sccs_gophish_current");
+    var emailAccounts = JSON.parse(window.localStorage.getItem("sccs_email"));
+    outputObj["emailAccount"] = emailAccounts["accounts"][currentAccountName];
+    document.getElementById("uploading-failure").classList.add("d-none");
+    fetch(go_phish_config["focusGroupAnalyticsURL"], {
+        method: 'post',
+        mode: 'cors',
+        body: JSON.stringify(outputObj),
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then((response) => {
+        return response.json()
+    }).then((res) => {
+        document.getElementById("uploading-spinner").classList.add("d-none");
+        document.getElementById("uploading-success").classList.remove("d-none");
+        //console.log(res);
+
+    }).catch((error) => {
+        console.log(error);
+        document.getElementById("uploading-spinner").classList.add("d-none");
+        document.getElementById("uploading-failure").classList.remove("d-none");
+        document.getElementById("manual-download").classList.remove("d-none");
+
+        alert("Error submitting data, please notify a facilitator.");
+    })
+}else{
+
+}
+
+}
+function generateQRCode() {
+    var outputObj = {}
+    outputObj["__sccs_gophish"] = window.localStorage.getItem("__sccs_gophish");
+    outputObj["__sccs_gophish_user_config"] = window.localStorage.getItem("__sccs_gophish_user_config");
+
+
+    var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: JSON.stringify(outputObj),
+        width: 512,
+        height: 512,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.L
+    });
+    return true;
+}
+function hideButton() {
+    const overlay = document.getElementById("playButtonOverlay");
+    overlay.classList.add("d-none");
+
+}
+function showButton() {
+    const overlay = document.getElementById("playButtonOverlay");
+    overlay.classList.remove("d-none");
+
+}
+function playPause(evt) {
+    const videoObj = document.getElementById("videoObj");
+    if (videoObj.paused) {
+        videoObj.play();
+    } else {
+        videoObj.pause();
+    }
+    evt.stopPropagation();
+    evt.preventDefault();
+}
+function exitFullscreen() {
+
+    if (document.exitFullscreen) {
+        document.exitFullscreen(); // Standard
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen(); // Blink
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen(); // Gecko
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen(); // Old IE
+    }
 }

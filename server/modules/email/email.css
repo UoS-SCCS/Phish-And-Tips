@@ -84,6 +84,9 @@ body {
     font-weight: 700;
     color: var(--logo_color);
     vertical-align: middle;
+    max-height:38px;
+    overflow:hidden;
+    display:inline-block;
 }
 
 #sccs-email {
@@ -199,6 +202,8 @@ body {
 
 .sccs-email-content .header-row {
     margin-bottom: 0.5rem;
+    max-height:42px;
+    overflow:hidden;
 }
 
 .sccs-email-content .reply-buttons-row {
@@ -538,6 +543,13 @@ body {
     height: calc(100vh - 240px);
     padding:1px;
 }
+@media(hover:none){
+    .sccs-email-body-div {
+        overflow-y:scroll;
+        height: calc(100vh - 260px);
+        padding:1px;
+    }   
+    }
 .sccs-padding-col {
     padding-right:0px;
 }
@@ -592,11 +604,13 @@ body {
     cursor: pointer;
     margin-left:20px;
 }
+@media(hover:hover){
 .selectable:hover {
     background-color: var(--email_part_selectable_bg);
     outline-color: var(--email_part_selectable_brd_clr);
     outline-style: var(--email_part_selectable_brd_sty);
     outline-width: var(--email_part_selectable_brd_wdt);
+}
 }
 .selectable-no-margin {
     margin-left:0px;

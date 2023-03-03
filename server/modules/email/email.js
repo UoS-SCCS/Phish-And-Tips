@@ -101,7 +101,8 @@ var currentEmailObject = null;
  *                              after the render, if null will default to inbox
  */
 function renderEmail(emailAddress = null,selectedCat=null) {
-
+    console.log("In render email");
+    
     const urlParams = new URLSearchParams(window.location.search);
     currentEmailAccount = urlParams.get("email");
     if (currentEmailObject !== null) {
@@ -117,7 +118,7 @@ function renderEmail(emailAddress = null,selectedCat=null) {
             (currentEmailObject = virtualEmailServer.getAccount(currentEmailAccount)).render(selectedCat);
         }
     }
-
+    //console.log(JSON.stringify(currentEmailObject));
 }
 
 
@@ -194,7 +195,7 @@ class VirtualEmailServer {
      * @param string emailAddress - email address to create
      * @param JSONOBject config - base configuration of account, i.e categories, etc.
      */
-    createAccount(emailAddress, config = default_config) {
+    createAccount(emailAddress, config = default_config, sendWelcome=true) {
         if (!(emailAddress in this.accounts)) {
             const account = new Account(emailAddress, config);
             this.#addAccount(account);
@@ -202,12 +203,14 @@ class VirtualEmailServer {
             localStorage.setItem("sccs_current", emailAddress);
 
             this._store();
-            const builder = new EmailBuilder();
-            builder.setFromName("Training Email Service").setFromAddress("training@example.com").setTo(emailAddress).setSubject("Welcome to the Training Email Service").setMessage("Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
-            //welcomeEmail.init("Training Email Service", emailAddress, "Welcome to the Training Email Service", "Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
-            const welcomeEmail = new Email(builder);
-            
-            this.receiveEmail(welcomeEmail);
+            if(sendWelcome){
+                const builder = new EmailBuilder();
+                builder.setFromName("Training Email Service").setFromAddress("training@example.com").setTo(emailAddress).setSubject("Welcome to the Training Email Service").setMessage("Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
+                //welcomeEmail.init("Training Email Service", emailAddress, "Welcome to the Training Email Service", "Welcome to the training email service. This is service provides a training email service that can receive emails within the training site.");
+                const welcomeEmail = new Email(builder);
+                
+                this.receiveEmail(welcomeEmail);
+            }
         } else {
             alert("Email account already exists");
         }
@@ -248,7 +251,9 @@ class VirtualEmailServer {
      * @param Email email - email to add, should be to an account that exist on the server
      */
     receiveEmail(email) {
+        //console.log("In receive email");
         if (email.to in this.accounts) {
+            //console.log(email);
             this.getAccount(email.to).receiveEmail(email);
             this._store();
         } else {
@@ -296,7 +301,7 @@ function prependZero(value){
     }
     return value;
 }
-
+var backupUUID = 1;
 /**
  * Email object that represents a single email
  */
@@ -326,8 +331,17 @@ class Email {
          * This is currently unused - if we need unique IDs uncomment
          * to generate random unique IDs.
          */
-        if (this.uid === null) {
-            this.uid = crypto.randomUUID();
+        if (this.uid === null) { 
+            //console.log("Setting UUID");
+            if (typeof crypto.randomUUID === "function") {
+                this.uid = crypto.randomUUID();
+                
+            }else{
+                this.uid = backupUUID;
+                backupUUID = backupUUID + 1;
+            }
+            
+            //console.log("Set UUID:" + this.uid);
         }
     }
     /**
@@ -366,7 +380,7 @@ class Email {
     }
 
     renderHeader(){
-        console.log("Render Header called");
+        //console.log("Render Header called");
     }
     /**
      * Render the contents of this email into the appropriate location
@@ -422,7 +436,7 @@ class Email {
                 if(sHeader.startsWith("_")){
                     
                     if(sHeader =="_From"){
-                        console.log("Adding should-select to header");
+                        //console.log("Adding should-select to header");
                         document.getElementById("emailContents" + sHeader.substr(1)).parentElement.classList.add("sccs-should-select");
                         if("_suspicious-explain_From" in this.headers){
                             document.getElementById("emailContents" + sHeader.substr(1)).parentElement.dataset.explain = this.headers["_suspicious-explain_From"];
@@ -747,6 +761,7 @@ class Account {
      * @param Email email   email object to be received
      */
     receiveEmail(email) {
+        //console.log("In account receive email");
         if (email.to !== this.emailAddress) {
             throw new EmailError("Invalid to address in received email");
         }
@@ -1092,6 +1107,7 @@ class Account {
                     }
                 }
                 if (unreadCount !== previousUnreadCount) {
+                    //console.log("unreadCount:" + unreadCount + " - Previous:" + previousUnreadCount);
                     showNewEmailToast("Inbox");
 
                 }
@@ -1112,6 +1128,7 @@ class Account {
                 }
 
                 if (unreadCount !== previousUnreadCount) {
+                    //console.log("unreadCount:" + unreadCount + " - Previous:" + previousUnreadCount);
                     showNewEmailToast("Inbox");
 
                 }
@@ -1194,8 +1211,10 @@ function storageChanged(evt) {
 /**
  * Go back function within the email UI
  */
-function goback() {
-    
+function goback(skipTest=false) {
+    if(!skipTest && !checkSafeToMove(undefined,true)){
+        return;
+    }
     document.getElementById("email-list").classList.remove("d-none");
     document.getElementById("email-list").classList.add("d-block");
     document.getElementById("email-viewer").classList.add("d-none");

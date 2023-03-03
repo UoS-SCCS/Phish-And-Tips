@@ -59,10 +59,12 @@ class GoPhish {
         return emailIds;
     }
     generateEmails(count = null, target, emailCats) {
+        
         var genCount = count
         if (count == null) {
             genCount = this.config["emailsToGenerate"];
         }
+        //console.log("Generate Email:" + genCount);
         var emailIds = [];
         const emailGenerator = new EmailGenerator();
         
@@ -71,19 +73,28 @@ class GoPhish {
         if(!emailCats.includes("All")){
             templateNames = templateNames.filter(function(e) { return  emailCats.includes(templates[e].category)})
         }
-        console.log(templateNames);
+        //console.log(templateNames);
+        const wrg = new WeightedRandomGenerator(templateNames);
         for (var i = 0; i < genCount; i++) {
             //emailGenerator.constructEmail("shopping",target);
             
-            const eb = emailGenerator.constructEmail(emailGenerator.randomItem(templateNames), target);//new EmailBuilder();
+            //const eb = emailGenerator.constructEmail(emailGenerator.randomItem(templateNames), target);//new EmailBuilder();
             //const emailContent = document.createElement("div");
             //emailContent.innerHTML = "<h3 class='selectable'>Welcome to my email</h3><p class='selectable sccs-should-select' data-explain='Explanation: Imprecise to field'>To someone</p><p class='selectable sccs-should-select' data-explain='Explanation: Overly friendly comment' >I hope this email finds your well.</p><p class='selectable'>" + "This is a short message number " + i.toString() + "</p><a class='selectable sccs-should-select' data-explain='Explanation: Address and URL do not match' href='https://www.google.com'>www.bing.com</a><p class='selectable'>your sincereely</p><p class='selectable'>bob</p>";
             //eb.setFromAddress("alice@example.com").setFromName("Alice").setTo(target).setSubject("Message " + i.toString()).setMessage(emailContent).setHeader("reply-to", "test@example.com").setHeader("mailing-list", false)
             //eb.setHeader("_suspicious", ["_To", "_From"]);
+            var eb=null;
+            while(eb==null){
+                eb = emailGenerator.constructEmail(wrg.getRandomItem(), target);//new EmailBuilder();    
+                //console.log(JSON.stringify(eb));
+            }
+            //console.log("Generated Email");
             const email = new Email(eb);
             //email.init({name:"Alice",address:"alice@example.com"}, "bob@example.com", "Message " + i.toString(), "This is a short message number " + i.toString(),undefined,undefined,{"reply-to":"test@example.com"});
             virtualEmailServer.receiveEmail(email);
+            //console.log("Sent Email");
             emailIds.push(email.uid);
+            //console.log("Added ID");
         }
         return emailIds;
     }
@@ -92,6 +103,29 @@ function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+class WeightedRandomGenerator{
+    constructor(list, total){
+        this.list = list;
+        this.usedList = [];
+    }
+    _randomInt(max, min = 0) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min) + min);
+    }
+    
+    getRandomItem(){
+        const itemIdx = this._randomInt(this.list.length, 0);
+        const item = this.list[itemIdx];
+        this.list.splice(itemIdx,1);
+        this.usedList.push(item);
+        if(this.list.length==0){
+            this.list = this.usedList.slice();
+            this.usedList = [];
+        }
+        return item;
     }
 }
 class Generator {
@@ -130,19 +164,24 @@ class EmailGenerator extends Generator {
         const generators = [];
         const sender = this.randomItem(template.senders);
         const eb = new EmailBuilder();
-        console.log("rand:" + this.randomInt(10,1));
+        //console.log("rand:" + this.randomInt(10,1));
         if(this.randomInt(10,1)>7){
             const subjectSpellingGenerator = new SubjectSpellingGrammarGenerator();
             subjectSpellingGenerator.init(true);
             const subjectArr = [this.randomItem(template.subject)];
+            const originalSubject = subjectArr[0];
             subjectSpellingGenerator.processContent(0,subjectArr,[]);
             eb.setSubject(subjectArr[0]);
-            subjectSpellingGenerator.processHeaders(eb);
+            if(subjectArr[0]!=originalSubject){
+                //console.log(subjectArr[0] + "!=" + originalSubject);
+                subjectSpellingGenerator.processHeaders(eb);
+            }
+            
         }else{
             const subject = this.randomItem(template.subject);
             eb.setSubject(subject);
         }
-        
+        const buttonText = this.randomItem(template.buttons);
         const urgencyText = this.randomItem(template.content.urgency);
         const content = template.content.lines;
         
@@ -160,7 +199,7 @@ class EmailGenerator extends Generator {
             }
         }
         shuffleArray(susGens);
-        console.log(susGens);
+        //console.log(susGens);
         for (var i = 0; i < go_phish_config.suspiciousGenerators.length; i++) {
             const genName = go_phish_config.suspiciousGenerators[i];
             switch (genName) {
@@ -172,7 +211,7 @@ class EmailGenerator extends Generator {
                     break;
                 case "URL":
                     suspiciousGens[genName] = susGens[i];
-                    var generator = new URLGenerator(sender);
+                    var generator = new URLGenerator(sender, buttonText);
                     generator.init(suspiciousGens);
                     generators.push(generator);
                     break;
@@ -210,12 +249,14 @@ class EmailGenerator extends Generator {
             }
             selectedContent[i] = textLine;
         }
+        //console.log("SelectedContent:");
+        //console.log(selectedContent);
         for (var i = 0; i < selectedContent.length; i++) {
             for (var j = 0; j < generators.length; j++) {
                 generators[j].processContent(i, selectedContent, claimed);
             }
         }
-        console.log(claimed);
+        //console.log(claimed);
         for (var i = 0; i < selectedContent.length; i++) {
             var resp = null;
             if (claimed[i] != null && claimed[i] != undefined) {
@@ -235,7 +276,20 @@ class EmailGenerator extends Generator {
         eb.setTo(target);
         eb.setHeader("mailing-list", false);
         eb.setMessage(emailContent);
-        return eb;
+        //console.log("Claimed:");
+        //console.log(claimed);
+        var isNull =true;
+        for(var i=0;i<claimed.length;i++){
+            if(claimed[i]!=undefined && claimed[i]!=PROTECTED){
+                isNull = false;
+                break;
+            }
+        }
+        if(isNull){
+            return null;
+        }else{
+            return eb;
+        }
         //emailContent.innerHTML = "<h3 class='selectable'>Welcome to my email</h3><p class='selectable sccs-should-select' data-explain='Explanation: Imprecise to field'>To someone</p><p class='selectable sccs-should-select' data-explain='Explanation: Overly friendly comment' >I hope this email finds your well.</p><p class='selectable'>"+"This is a short message number " + i.toString() +"</p><a class='selectable sccs-should-select' data-explain='Explanation: Address and URL do not match' href='https://www.google.com'>www.bing.com</a><p class='selectable'>your sincereely</p><p class='selectable'>bob</p>";
         //eb.setFromAddress("alice@example.com").setFromName("Alice").setTo(target).setSubject("Message " + i.toString()).setMessage(emailContent).setHeader("reply-to", "test@example.com").setHeader("mailing-list", false)
         //eb.setHeader("_suspicious", ["_To", "_From"]);
@@ -268,7 +322,11 @@ class ToGenerator extends Generator {
         if (selectedContent[idx].indexOf(this.placeholderName) >= 0) {
             //Placeholder to replace
             selectedContent[idx] = selectedContent[idx].replaceAll(this.placeholderName, this.targetName);
-            claimed[idx] = this;
+            if(this.isSuspicious){
+                claimed[idx] = this;
+            }else{
+                claimed[idx] = PROTECTED;
+            }
         }
     }
     format(content) {
@@ -309,7 +367,12 @@ class UrgencyGenerator extends Generator {
         if (selectedContent[idx].indexOf(this.placeholderName[this.placement]) >= 0) {
             //Placeholder to replace
             selectedContent[idx] = selectedContent[idx].replaceAll(this.placeholderName[this.placement], this.targetUrgency);
-            claimed[idx] = this;
+            if(this.isSuspicious){
+                claimed[idx] = this;
+            }else{
+                claimed[idx] = PROTECTED;
+            }
+
         }
     }
     format(content) {
@@ -480,7 +543,9 @@ class SpellingGrammarGenerator extends Generator {
                 }
 
             }
-            claimed[idx] = this;
+            if(changesMade>0){
+                claimed[idx] = this;
+            }
         }
         return changesMade;
     }
@@ -540,9 +605,9 @@ class SpellingGrammarGenerator extends Generator {
                 const matchedWord = matchedArray[idxArray[wordIdx]];
                 var targetWord = matchedWord["0"];
                 const randomLetterIdx = this.randomInt(targetWord.length - 1, 0);
-                console.log("RemoveLetterBefore:" + targetWord);
+                //console.log("RemoveLetterBefore:" + targetWord);
                 targetWord = targetWord.slice(0, randomLetterIdx) + targetWord.slice(randomLetterIdx + 1);
-                console.log("RemoveLetterAfter:" + targetWord);
+                //console.log("RemoveLetterAfter:" + targetWord);
                 selectedContent[idx] = selectedContent[idx].substring(0, matchedWord.index) + targetWord + selectedContent[idx].substring(matchedWord.index + matchedWord["0"].length);
                 changesMade++;
                 claimed[idx] = this;
@@ -583,14 +648,14 @@ class SpellingGrammarGenerator extends Generator {
                 const randomLetterIdx = this.randomInt(targetWord.length - 1, 0);
                 if (randomLetterIdx != targetWord.length - 1 && (randomLetterIdx == 0 || this.randomInt(1, 0) == 1)) {
                     //transpose right
-                    console.log("TransposeRightOriginal:" + targetWord);
+                    //console.log("TransposeRightOriginal:" + targetWord);
                     targetWord = targetWord.slice(0, randomLetterIdx) + targetWord.charAt(randomLetterIdx + 1) + targetWord.charAt(randomLetterIdx) + targetWord.slice(randomLetterIdx + 2);
-                    console.log("TransposeRightFinish:" + targetWord);
+                    //console.log("TransposeRightFinish:" + targetWord);
                 } else {
                     //transpose left
-                    console.log("TransposeLeftOriginal:" + targetWord);
+                    //console.log("TransposeLeftOriginal:" + targetWord);
                     targetWord = targetWord.slice(0, randomLetterIdx - 1) + targetWord.charAt(randomLetterIdx) + targetWord.charAt(randomLetterIdx - 1) + targetWord.slice(randomLetterIdx + 1);
-                    console.log("TransposeLeftFinish:" + targetWord);
+                    //console.log("TransposeLeftFinish:" + targetWord);
                 }
                 
                 selectedContent[idx] = selectedContent[idx].substring(0, matchedWord.index) + targetWord + selectedContent[idx].substring(matchedWord.index + matchedWord["0"].length);
@@ -602,20 +667,31 @@ class SpellingGrammarGenerator extends Generator {
 
     }
     processContent(idx, selectedContent, claimed) {
-        if (selectedContent[idx].search(new RegExp("\\%[^%]*\\%", "gi")) < 0 && this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
-
+        var spellingChangeMadeGlobally =0;
+            for(var i=0;i<claimed.length;i++){
+                if(claimed[i]==this){
+                    spellingChangeMadeGlobally++;
+                }
+            }
+        if (spellingChangeMadeGlobally<=1 && selectedContent[idx].search(new RegExp("\\%[^%]*\\%", "gi")) < 0 && selectedContent[idx].search(new RegExp("<[^>]*>", "gi")) < 0 && this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
+            
+            
+            //console.log("In Spelling Process Content");
+            //console.log(claimed);
+            //console.log(claimed[idx]);
+            //console.log("Cont Spelling Process Content");
 
             var operators = this.changes.slice();
             const targetChangesToMake = this.randomInt(this.MAX_CHANGES, 1);
-            console.log(targetChangesToMake);
+            //console.log(targetChangesToMake);
             var totalChangesMade = 0;
             shuffleArray(operators);
-            console.log(operators);
+            //console.log(operators);
             for (var i = 0; i < operators.length; i++) {
                 if (totalChangesMade >= targetChangesToMake) {
                     break;
                 }
-                console.log("changesMade:" + totalChangesMade);
+                //console.log("changesMade:" + totalChangesMade);
                 switch (operators[i]) {
                     case "substitution":
                         totalChangesMade = totalChangesMade + this._processContentSubstitution(idx, selectedContent, claimed);
@@ -639,6 +715,7 @@ class SpellingGrammarGenerator extends Generator {
 
     }
     format(content) {
+        //console.log("format Spelling:" + content);
         const pElem = document.createElement("p");
         pElem.innerHTML = content;
         pElem.classList.add("selectable");
@@ -661,6 +738,7 @@ class SubjectSpellingGrammarGenerator extends SpellingGrammarGenerator {
     format(content) {
         return;
     }
+   
     processHeaders(eb) {
         if (this.isSuspicious) {
             eb.appendToHeader("_suspicious", "_Subject");
@@ -670,15 +748,17 @@ class SubjectSpellingGrammarGenerator extends SpellingGrammarGenerator {
     }
 }
 class URLGenerator extends Generator {
-    constructor(sender) {
+    constructor(sender, buttonText) {
         super();
         this.sender = sender;
-        this.explanation = "Links can have the URLs hidden or made to appear to be going somewhere different to where they really are. For example, the text shown can be different to the actual address in the link. Or the URL can be embedded in a button or piece of text. Hover over the URL and look in the status bar to see where the link is really going.";
-
+        this.explanation = "Links can have the URLs hidden or made to appear to be going somewhere different to where they really are. For example, the text shown can be different to the actual address in the link. Or the URL can be embedded in a button or piece of text. Hover over the URL and look in the bottom left hand corner to see where the link is really going.";
+        this.buttonText = buttonText;
         this._gen_name = "URL";
         this.isSuspicious = false;
         this.visiblePlaceholder = "%VISIBLEURL%";
         this.urlPlaceholder = "%URL%";
+        this.buttonClass = "btn btn-primary";
+        this.classPlaceholder = "%LINKCLASS%";
     }
     init(suspicious) {
         if (this._gen_name in suspicious && suspicious[this._gen_name]) {
@@ -691,12 +771,24 @@ class URLGenerator extends Generator {
         if (selectedContent[idx].indexOf(this.visiblePlaceholder) >= 0 || selectedContent[idx].indexOf(this.urlPlaceholder) >= 0) {
             //Placeholder to replace
             if (this.isSuspicious && (claimed[idx] == null || claimed[idx] == undefined)) {
-                selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.fakeWebAddress);
+                const linkType = this.randomInt(2, 1);
+                if(linkType==1){
+                    //Hidden URL with Text
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.buttonText);
+                }else{
+                    //Hidden URL with fake URL
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.fakeWebAddress);
+                }
+                if(selectedContent[idx].indexOf(this.classPlaceholder) >= 0){
+                    //Hidden URL with Button
+                    selectedContent[idx] = selectedContent[idx].replaceAll(this.classPlaceholder, this.buttonClass);
+                }
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.urlPlaceholder, this.sender.realWebAddress);
                 claimed[idx] = this;
             } else {
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.visiblePlaceholder, this.sender.realWebAddress);
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.urlPlaceholder, this.sender.realWebAddress);
+                selectedContent[idx] = selectedContent[idx].replaceAll(this.classPlaceholder, "");
             }
         }
     }
@@ -719,6 +811,7 @@ class SenderGenerator extends Generator {
         this._gen_name = "Sender";
         this.isSuspicious = false;
         this.placeholderName = "%NAME%";
+        this.regEx = new RegExp('(%\\S+%)');
     }
     init(suspicious) {
         if (this._gen_name in suspicious && suspicious[this._gen_name]) {
@@ -730,6 +823,7 @@ class SenderGenerator extends Generator {
             //Placeholder to replace
             if (this.isSuspicious) {
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.placeholderName, this.sender.fakeName);
+                claimed[idx] = this;
             } else {
                 selectedContent[idx] = selectedContent[idx].replaceAll(this.placeholderName, this.sender.realName);
             }
@@ -738,8 +832,14 @@ class SenderGenerator extends Generator {
         }
     }
     format(content) {
-        return;
-        //We never claim any lines so shouldn't process them 
+        //console.log("generic generator:" + content);
+        if (!this.regEx.test(content)) {
+            const pElem = document.createElement("p");
+            pElem.innerHTML = content;
+            pElem.classList.add("selectable");
+            return pElem;
+        }
+        return null;
     }
     processHeaders(eb) {
         if (this.isSuspicious) {
@@ -762,6 +862,7 @@ class GenericGenerator extends Generator {
         this.regEx = new RegExp('(%\\S+%)');
     }
     format(content) {
+        //console.log("generic generator:" + content);
         if (!this.regEx.test(content)) {
             const pElem = document.createElement("p");
             pElem.innerHTML = content;
@@ -771,3 +872,4 @@ class GenericGenerator extends Generator {
         return null;
     }
 }
+const PROTECTED = new GenericGenerator();

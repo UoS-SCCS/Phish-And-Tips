@@ -54,7 +54,8 @@
     <title>Training Email Account</title>
 </head>
 
-<body onload="renderEmail();loadGoPhish();prepPopover();addStorageListener();" onclick="hidePopUp(event)">
+<body onload="renderEmail();loadGoPhish();prepPopover();addStorageListener();showWelcomeModal();"
+    onclick="hidePopUp(event)">
 
     <div id="sccs-email">
         <div id="sccs-email-training-bar" class="training-bar">
@@ -63,11 +64,12 @@
             </div>
 
             <div class="shadow p-3 mb-5 bg-light sccs-bg-light text-black  rounded text-center ">
-                <div class="card-body justify-content-center">
+                <div class="card-body justify-content-center profile-body">
                     <h5 id="profile-title">Bob's Profile</h5>
-
+                    <p>The following represent the companies, websites, and online services that your simulated profile
+                        uses:</p>
                     <ul style="text-align:left" id="profileList">
-                        
+
                     </ul>
 
 
@@ -98,7 +100,7 @@
             <div class="row">
                 <div class="col-auto">
                     <div id="popoverHelp" class="sticky-top fa-parent help-pop-button" data-bs-toggle="popover"
-                        data-bs-html="true" data-bs-content="" data-bs-title="Practice Using Passwords"
+                        data-bs-html="true" data-bs-content="" data-bs-title="Phish and Tips"
                         data-bs-placement="bottom">
                         <i class="fas fa-question-circle fa-hover-beat"
                             style="color:var(--help_color);font-size:48pt"></i>
@@ -315,18 +317,73 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header sccs-modal-header">
-                    <h5 class="modal-title" id="nextWithoutScoreModalLabel">Move Next without Scoring?</h5>
+                    <h5 class="modal-title" id="nextWithoutScoreModalLabel">Move without Scoring?</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body  sccs-modal-body">
-                    <p>You have clicked the Next button to move to the next email, but have not yet scored the current email.</p>
-                    <p>Do you want to continue to the next email without
-                        scoring this email first, or score - and receive feedback - this email first?</p>
-                        <p>You can always come back to this email later if you do not want to score it now.</p>
+                    <p>You have clicked to move to another email, but have not yet scored the current
+                        email.</p>
+                    <p>Do you want to continue to the new email without
+                        scoring this email first, or score - and receive feedback on - this email first?</p>
+                    <p>You can always come back to this email later if you do not want to score it now.</p>
                 </div>
                 <div class="modal-footer  bg-light sccs-modal-footer ">
-                    <button type="button" class="btn btn-secondary" onclick="contMoveNext()">Continue to Next Email</button>
-                    <button type="button" class="btn btn-primary" onclick="scoreCurrentFirst()">Score this Email First</button>
+                    <button type="button" class="btn btn-secondary" onclick="contMoveNext()">Continue to Next
+                        Email</button>
+                    <button type="button" class="btn btn-primary" onclick="scoreCurrentFirst()">Score this Email
+                        First</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="listWithoutScoreModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="listWithoutScoreModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header sccs-modal-header">
+                    <h5 class="modal-title" id="listWithoutScoreModalLabel">Return without Scoring?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body  sccs-modal-body">
+                    <p>You have clicked the return to Inbox button, but have not yet scored the current
+                        email.</p>
+                    <p>Do you want to continue to the Inbox without
+                        scoring this email first, or score - and receive feedback - this email first?</p>
+                    <p>You can always come back to this email later if you do not want to score it now.</p>
+                </div>
+                <div class="modal-footer  bg-light sccs-modal-footer ">
+                    <button type="button" class="btn btn-secondary" onclick="contReturn()">Continue to Inbox</button>
+                    <button type="button" class="btn btn-primary" onclick="scoreCurrentFirst()">Score this Email
+                        First</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="welcomeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="welcomeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header sccs-modal-header">
+                    <h5 class="modal-title" id="welcomeModalLabel">Welcome to Phish and Tips!</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body  sccs-modal-body">
+                    <p>Welcome to the Phish and Tips! training platform. The training involves you looking through
+                        different emails and selecting the parts of the email you believe may be suspicious. Each email
+                        will contain at least one part that is considered suspicious</p>
+                    <p>To get started click the <b>Open Next Email</b> button in the lower left hand side of the
+                        screen. This will open the first email for you to check.</p>
+                    <p>Once the email has opened, click on the relevant parts of the email that you think look
+                        suspicious. Once you have selected all the parts of the email that you think are suspicious
+                        click the <b>Score Current Email</b> button in the lower left hand side of the screen to check
+                        your selections and receive feedback. </p>
+                    <p>Once you have finished reading the feedback click the <b>Open Next Email</b> button to move to
+                        the next email. Once you have looked at all the emails click the <b>Return to Training Hub</b>
+                        button to finish the training.</p>
+
+                </div>
+                <div class="modal-footer  bg-light sccs-modal-footer ">
+                    <button type="button" class="btn btn-primary" onclick="closeWelcome()">Ok</button>
                 </div>
             </div>
         </div>
@@ -342,19 +399,25 @@
                 </div>
                 <div class="modal-body sccs-modal-body">
                     <p id="finalScore">The following are your results for this email:
-                        
-                        <ul>
-                            <li><i class="fas fa-check-circle sccs-guide-icon sccs-correct-icon"></i>Correct:<span id="correctScore"></span></li>
-                            <li><i class="fas fa-arrow-alt-circle-right sccs-guide-icon sccs-missed-icon"></i>Missed:<span id="missedScore"></span></li>
-                            <li><i class="fas fa-times-circle sccs-guide-icon sccs-incorrect-icon"></i>Incorrect:<span id="incorrectScore"></span> (selected when they should not have been)</li>
-                        </ul>
+
+                    <ul>
+                        <li><i class="fas fa-check-circle sccs-guide-icon sccs-correct-icon"></i>Correct:<span
+                                id="correctScore"></span></li>
+                        <li><i class="fas fa-arrow-alt-circle-right sccs-guide-icon sccs-missed-icon"></i>Missed:<span
+                                id="missedScore"></span></li>
+                        <li><i class="fas fa-times-circle sccs-guide-icon sccs-incorrect-icon"></i>Incorrect:<span
+                                id="incorrectScore"></span> (selected when they should not have been)</li>
+                    </ul>
                     </p>
-                    <p>Click on any parts marked with a <i class="fas fa-check-circle sccs-guide-icon sccs-correct-icon"></i> or <i class="fas fa-arrow-alt-circle-right sccs-guide-icon sccs-missed-icon"></i> to see additional feedback.</p>
+                    <p>Click on any parts marked with a <i
+                            class="fas fa-check-circle sccs-guide-icon sccs-correct-icon"></i> or <i
+                            class="fas fa-arrow-alt-circle-right sccs-guide-icon sccs-missed-icon"></i> to see
+                        additional feedback.</p>
                 </div>
                 <div class="modal-footer sccs-modal-footer bg-light">
-                    
+
                     <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Ok</button>
-                    
+
                 </div>
             </div>
         </div>

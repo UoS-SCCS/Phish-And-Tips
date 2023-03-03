@@ -33,6 +33,16 @@
        
     }
 }
+@media screen and (min-width: 1201px) and (max-width: 1400px) {
+    #sccs-email .training-bar {
+        width:25%;
+    }
+    #sccs-email .sccs {
+       
+        width: 75%;
+       
+    }
+}
 #sccs-email .training-bar .training-header {
     text-align: center;
 
@@ -48,7 +58,7 @@
     
 }
 #email-task-list {
-    max-height:300px;
+    max-height:calc(0.3 * 100vh);
     overflow-y: scroll;
     margin-bottom: 0.5em;
 }
@@ -56,6 +66,7 @@
     display: block;
     margin:4px;
     position:relative;
+    text-align: left;
 }
 .result-text {
     position:absolute;
@@ -95,4 +106,8 @@
 .sccs-modal-footer {
     --bs-bg-opacity: 1;
     background-color: rgba(233,233,232,var(--bs-bg-opacity))!important;
+}
+.profile-body {
+    max-height: calc(0.25 * 100vh);
+    overflow-y: scroll;
 }
