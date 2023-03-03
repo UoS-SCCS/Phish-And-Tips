@@ -40,11 +40,11 @@ goPhishGame.refresh();
 function resetTraining() {
     const result = window.confirm("Are you sure you want to reset your training progress?\n\nThis will clear your current training data and allow you to try again.");
     if (result) {
-        const currentacc=window.localStorage.getItem("sccs_gophish_current");
+        const currentacc = window.localStorage.getItem("sccs_gophish_current");
         virtualEmailServer.delete(window.localStorage.getItem("sccs_gophish_current"));
         goPhishGame.clear();
         window.localStorage.removeItem("sccs_gophish_current");
-        virtualEmailServer.createAccount(currentacc,undefined,false);
+        virtualEmailServer.createAccount(currentacc, undefined, false);
         document.getElementById("newAccount").innerText = currentacc;
         localStorage.setItem("sccs_gophish_current", currentacc);
         loadAccountsList(currentacc);
@@ -64,13 +64,14 @@ function finish() {
     const result = window.confirm("Are you sure you want to end your training?\n\nThis will delete your training account and training email address. You will be able to try the training again, but will need to repeat the setup and registration steps.");
     if (result) {
         virtualEmailServer.delete(window.localStorage.getItem("sccs_gophish_current"));
+        server.delete(window.localStorage.getItem("sccs_gophish_current"));
         goPhishGame.clear();
         window.localStorage.removeItem("sccs_gophish_current");
         window.localStorage.removeItem("__sccs_user_config");
         window.localStorage.removeItem("sccs_current");
-        
+
         loadAccountsList(null);
-        
+
         window.location = "index.html#introduction";
         window.location.reload();
 
@@ -89,12 +90,12 @@ function configureGoPhishAccount(evt) {
         if (accountName === null || accountName === "") {
             alert("You need to enter a name for your account");
             return false;
-        } else if(localStorage.getItem("sccs_gophish_current")!=null){
+        } else if (localStorage.getItem("sccs_gophish_current") != null) {
             alert("An existing account is already active. Either reset the existing account using the button at the bottom of the page to start the training again, or click the \"Create New Phish and Tips! Training Account\" button at the top of page to create a new account.");
             return false;
         } else {
-            virtualEmailServer.createAccount(accountName + "@example.com",undefined,false);
-            
+            virtualEmailServer.createAccount(accountName + "@example.com", undefined, false);
+
             document.getElementById("newAccount").innerText = accountName + "@example.com";
             localStorage.setItem("sccs_gophish_current", accountName + "@example.com");
             loadAccountsList(accountName + "@example.com");
@@ -126,10 +127,10 @@ function generateGoPhishEmails(evt) {
     }
     goPhishGame = new GoPhishGame();
     goPhishGame.refresh();
-    if(goPhishGame.getField("participantId",null)==null){
-        goPhishGame.setField("participantId",document.getElementById("participantId").value);
+    if (goPhishGame.getField("participantId", null) == null) {
+        goPhishGame.setField("participantId", document.getElementById("participantId").value);
     }
-    
+
     if (!goPhishGame.hasEmails()) {
         goPhishGame.generateEmails(emailCats);
     }
@@ -160,7 +161,17 @@ function showTrainingLanding() {
         document.getElementById("createNewHolder").classList.remove("d-none");
         document.getElementById("createNewHolder").classList.add("d-block");
     }
-
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
+        //Show Focus Group UI
+        const fgElems = document.getElementsByClassName("focus-group");
+        for(var i=0;i<fg-elems.length;i++){
+            fgElems[i].classList.remove("focus-group");
+        }
+        const nonFgElems = document.getElementsByClassName("non-focus-group");
+        for(var i=0;i<nonFgElems.length;i++){
+            nonFgElems[i].style.display = "none";
+        }
+    }
     const popContents = document.createElement("div");
     popContents.id = "popcontents";
     popContents.className = "help-popover text-black";
@@ -243,7 +254,7 @@ function showTrainingLanding() {
         document.getElementById("newAccount").innerText = currentUser;
 
     }
-    document.getElementById("participantId").value = goPhishGame.getField("participantId","");
+    document.getElementById("participantId").value = goPhishGame.getField("participantId", "");
     var accounts = goPhishGame.getConfigAccounts();
     if (!(window.location.hash.length)) {
         if (accounts.length > 1 || (accounts.length > 0 && currentUser === null)) {
@@ -323,13 +334,19 @@ function showTrainingLanding() {
 
     updateTrainingList();
 }
-function checkParticipantId(){
-    const participantId = document.getElementById("participantId");
-    if(participantId.value.length>0){
+function checkParticipantId() {
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
+
+        const participantId = document.getElementById("participantId");
+        if (participantId.value.length > 0) {
+            return true;
+        } else {
+            alert("Please enter a participant ID to continue");
+            return false;
+        }
+    } else {
+        //No participant ID so pass the check
         return true;
-    }else{
-        alert("Please enter a participant ID to continue");
-        return false;
     }
 }
 function checkCatSelection() {
@@ -471,7 +488,7 @@ function createNewGoPhishTrainingAccount() {
 
 
 }
-function exportData(){
+function exportData() {
     var outputObj = {}
     outputObj["__sccs_gophish"] = JSON.parse(window.localStorage.getItem("__sccs_gophish"));
     outputObj["__sccs_gophish_user_config"] = JSON.parse(window.localStorage.getItem("__sccs_gophish_user_config"));
@@ -480,11 +497,12 @@ function exportData(){
     outputObj["emailAccount"] = emailAccounts["accounts"][currentAccountName];
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(outputObj));
     var dlAnchorElem = document.createElement("a");
-    dlAnchorElem.setAttribute("href",     dataStr     );
+    dlAnchorElem.setAttribute("href", dataStr);
     dlAnchorElem.setAttribute("download", "data.json");
     dlAnchorElem.click();
 }
 function submitData() {
+    if (go_phish_config.hasOwnProperty("showFocusGroupUI") && go_phish_config["showFocusGroupUI"]) {
     document.getElementById("uploading-spinner").classList.remove("d-none");
     var outputObj = {}
     outputObj["__sccs_gophish"] = JSON.parse(window.localStorage.getItem("__sccs_gophish"));
@@ -493,7 +511,7 @@ function submitData() {
     var emailAccounts = JSON.parse(window.localStorage.getItem("sccs_email"));
     outputObj["emailAccount"] = emailAccounts["accounts"][currentAccountName];
     document.getElementById("uploading-failure").classList.add("d-none");
-    fetch("https://compendium.dev.castellate.com:5500/datasubmit", {
+    fetch(go_phish_config["focusGroupAnalyticsURL"], {
         method: 'post',
         mode: 'cors',
         body: JSON.stringify(outputObj),
@@ -513,9 +531,13 @@ function submitData() {
         document.getElementById("uploading-spinner").classList.add("d-none");
         document.getElementById("uploading-failure").classList.remove("d-none");
         document.getElementById("manual-download").classList.remove("d-none");
-        
+
         alert("Error submitting data, please notify a facilitator.");
     })
+}else{
+
+}
+
 }
 function generateQRCode() {
     var outputObj = {}
@@ -533,35 +555,35 @@ function generateQRCode() {
     });
     return true;
 }
-function hideButton(){
+function hideButton() {
     const overlay = document.getElementById("playButtonOverlay");
     overlay.classList.add("d-none");
-    
+
 }
-function showButton(){
+function showButton() {
     const overlay = document.getElementById("playButtonOverlay");
     overlay.classList.remove("d-none");
-    
+
 }
-function playPause(evt){
+function playPause(evt) {
     const videoObj = document.getElementById("videoObj");
-    if(videoObj.paused){
+    if (videoObj.paused) {
         videoObj.play();
-    }else{
+    } else {
         videoObj.pause();
     }
     evt.stopPropagation();
     evt.preventDefault();
 }
-function exitFullscreen(){
-    
-        if (document.exitFullscreen) {
-            document.exitFullscreen(); // Standard
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen(); // Blink
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen(); // Gecko
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen(); // Old IE
-        }
+function exitFullscreen() {
+
+    if (document.exitFullscreen) {
+        document.exitFullscreen(); // Standard
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen(); // Blink
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen(); // Gecko
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen(); // Old IE
     }
+}

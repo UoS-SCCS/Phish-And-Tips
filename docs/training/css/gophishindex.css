@@ -70,3 +70,6 @@
 #uploading-spinner {
     color:gray;
 }
+.focus-group {
+    display:none !important;
+}

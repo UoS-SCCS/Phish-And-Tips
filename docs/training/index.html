@@ -37,13 +37,15 @@
     <script src="./modules/email/gophish.js"></script>
     <script src="./modules/email/gophish_game.js"></script>
 
+    <script src="./config/base_config.js"></script>
+    <script src="./config/pageconfig_base.js"></script>
     <!--refactor to dynamically load-->
     <script src="./modules/storage/storage.js"></script>
+    <script src="./modules/server/server.js"></script>
     <script src="./modules/email/email.js"></script>
     <script src="./modules/email/phish-data.json"></script>
     <script src="./js/pages/gophish-index.js"></script>
 
-    <script src="./js/qrcode.min.js"></script>
 
     <link href="./css/bootstrap-glass.css" rel="stylesheet">
     <link href="./css/all.min.css" rel="stylesheet">
@@ -81,6 +83,7 @@
                                 By clicking Next through the following screens you will be guided through setting up
                                 your training email account. After that you will start the lesson.
                             </p>
+                            <div class="focus-group">
                             <p><label for="participantId">Please enter your participant ID below:</label> </p>
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-8">
@@ -91,6 +94,7 @@
                                             title="Please enter your participant ID here" autocomplete="off">
                                     </div>
                                 </div>
+                            </div>
                             </div>
                             <p><strong>Click Next to get started!</strong></p>
 
@@ -184,6 +188,8 @@
 
                         <!--Grid column-->
                         <div class="col-md-8">
+
+                            <!-- Description -->
                             <p>Thank you, we have setup your new training email address: <span id="newAccount"></span>
                             </p>
                             <!-- Description -->
@@ -228,7 +234,7 @@
 
                         <!--Grid column-->
                         <div class="col-md-8">
-
+                            
                             <!-- Description -->
 
                             <p>The exercise requires you to select suspicious parts of the email. You can do that by
@@ -270,6 +276,7 @@
 
                         <!--Grid column-->
                         <div class="col-md-8">
+                            
 
                             <!-- Description -->
 
@@ -280,8 +287,11 @@
                                     have seen whilst completing the training. Click or touch the heading too see more
                                     information.-->
 
-                            <p>Once you've finished reading please click the Next button, where we will collect some
-                                usage information and provide an opportunity for you to restart the training if you wish
+                                    <p class="focus-group">Once you've finished reading please click the Next button, where we will collect some
+                                        usage information and provide an opportunity for you to restart the training if you wish
+                                        to have another go.
+                                    </p>
+                                    <p class="non-focus-group">Once you've finished reading please click the Next button, where you will have an opportunity to restart the training if you wish
                                 to have another go.
                             </p>
                             <div><strong>Training Summary</strong></div>
@@ -496,10 +506,11 @@
                     <h2 class="mb-3 font-weight-bold">Finish Training</h2>
 
                     <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
+                    <div class="row d-flex justify-content-center mb-4 focus-group">
 
                         <!--Grid column-->
                         <div class="col-md-8">
+                           
 
                             <!-- Description -->
                             <p>Thank you for taking part in our focus groups. We are uploading some statistics from the
@@ -521,6 +532,13 @@
                         </div>
                         <!--Grid column-->
 
+                    </div>
+                    <div class="row d-flex justify-content-center mb-4 non-focus-group">
+
+                        <!--Grid column-->
+                        <div class="col-md-8">
+                            <p>If you wish to try the training again click Reset Data and Try Again. If you have finished click Finish and Clear Data to delete your virtual account and end the training.</p>
+                        </div>
                     </div>
                     <a class="btn btn-primary" onclick="resetTraining();false;" role="button">Reset Data and Try
                         Again</a>

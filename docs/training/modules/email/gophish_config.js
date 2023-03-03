@@ -1,4 +1,6 @@
 const go_phish_config = {
+    "showFocusGroupUI": false,
+    "focusGroupAnalyticsURL":"https://compendium.dev.castellate.com:5500/datasubmit",
     "emailsToGenerate": 8,
     "maxSuspiciousElements":4,
     "minimumSuspiciousElements":1,

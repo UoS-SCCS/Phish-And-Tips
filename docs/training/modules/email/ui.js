@@ -219,6 +219,7 @@ function prepHeaderPopover(email) {
         
     });
     
+
     document.getElementById("popoverHeader").addEventListener('click', function (evt) {
         //evt.stopPropagation();
         
