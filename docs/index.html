@@ -1,582 +1,98 @@
-<!DOCTYPE html>
-<!--
-/*******************************************************************************
-*                                                                              *
-* (C) Copyright 2021-2022 University of Surrey                                 *
-*                                                                              *
-* Redistribution and use in source and binary forms, with or without           *
-* modification, are permitted provided that the following conditions are met:  *
-*                                                                              *
-* 1. Redistributions of source code must retain the above copyright notice,    *
-* this list of conditions and the following disclaimer.                        *
-*                                                                              *
-* 2. Redistributions in binary form must reproduce the above copyright notice, *
-* this list of conditions and the following disclaimer in the documentation    *
-* and/or other materials provided with the distribution.                       *
-*                                                                              *
-* THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"  *
-* AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE    *
-* IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE   *
-* ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE    *
-* LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR          *
-* CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF         *
-* SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS     *
-* INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN      *
-* CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)      *
-* ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE   *
-* POSSIBILITY OF SUCH DAMAGE.                                                  *
-*                                                                              *
-*******************************************************************************/
--->
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="./modules/email/gophish_config.js"></script>
-    <script src="./modules/email/gophish.js"></script>
-    <script src="./modules/email/gophish_game.js"></script>
-
-    <!--refactor to dynamically load-->
-    <script src="./modules/storage/storage.js"></script>
-    <script src="./modules/email/email.js"></script>
-    <script src="./modules/email/phish-data.json"></script>
-    <script src="./js/pages/gophish-index.js"></script>
-
-    <script src="./js/qrcode.min.js"></script>
-
-    <link href="./css/bootstrap-glass.css" rel="stylesheet">
-    <link href="./css/all.min.css" rel="stylesheet">
-    <link href="./css/sccs.css" rel="stylesheet">
-    <link href="./css/gophishindex.css" rel="stylesheet">
-    <link href="./css/fonts.css" rel="stylesheet">
-    <title>Phish and Tips! Training Site</title>
-
-</head>
-
-<body onload="showTrainingLanding();" onclick="">
-
-    <main class="mt-5">
-        <div class="container">
-
-            <!--Section: Best Features-->
-            <section id="introduction" class="text-center min-vh-100">
-                <div class="shadow p-3 mb-5 bg-light text-black rounded">
-                    <img src="./imgs/logo.png" class="sccs-logo" alt="Surrey Centre for Cyber Security Logo"
-                        title="SCCS Logo">
-                    <h1>Phish and Tips! Training Site</h1>
-
-                    <!-- Heading -->
-                    <h2 class="mb-3">Introduction</h2>
-
-                    <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-6">
-                            <p>Welcome to the Phish and Tips! Training Site.</p>
-                            <!-- Description -->
-                            <p>Here is the learning material to support the lessons.
-
-                                By clicking Next through the following screens you will be guided through setting up
-                                your training email account. After that you will start the lesson.
-                            </p>
-                            <p><label for="participantId">Please enter your participant ID below:</label> </p>
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-8">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control text-left bg-white"
-                                            style="text-align: left;" id="participantId"
-                                            placeholder="Enter Participant ID" aria-label="Participant ID"
-                                            title="Please enter your participant ID here" autocomplete="off">
-                                    </div>
-                                </div>
-                            </div>
-                            <p><strong>Click Next to get started!</strong></p>
-
-                        </div>
-                        <!--Grid column-->
-
-                    </div>
-                    <!--Grid row-->
-                    <p id="createNewHolder" class="d-none"><a id="createNewBtn"
-                            onclick="createNewGoPhishTrainingAccount();return false;" href="#"
-                            class="btn btn-primary">Create
-                            New Phish and Tips! Training Account</a></p>
-                    <a class="btn btn-primary" href="#emailintro" onclick="return checkParticipantId(event);"
-                        role="button">Next</a>
-                </div>
-            </section>
-
-            <!--Section: Best Features-->
-            <section id="emailintro" class="text-center min-vh-100">
-                <hr class="my-5">
-                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
-                    <!-- Heading -->
-                    <h2 class="mb-3 font-weight-bold">Getting Started</h2>
-
-                    <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-8">
-
-                            <!-- Description -->
-                            <p class="grey-text">Please provide a
-                                name to create your temporary training email address.
-                                This email address is only for use during the
-                                following lessons and is separate to your normal email address. It cannot be used to
-                                send or receive emails outside of the training site.
-                                <!--By using a temporary training email account it allows
-                                you to freely try out the lessons without affecting your real email account.-->
-                            </p>
-                            <!--<p>Once you have finished the training click the "Finish Training" button at the bottom of
-                                the page and your training account and temporary email address will be deleted, you do
-                                not need to doing anything further.</p>-->
-                            <p>Your temporary email address will be of the form <em>name</em>@example.com where
-                                <em>name</em> will be the value you provide below. Use your first name,
-                                for example, joe, mary, leslie.
-                            </p>
-                            <p>Your chosen name cannot have any spaces in it, but don't
-                                worry, these will be automatically removed if you do try
-                                to enter any of them.
-                            </p>
-                            <p><label for="accountName">Please enter your chosen name below:</label> </p>
-                            <!-- validate to ensure it doesn't contain another email address -->
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-8">
-                                    <div class="input-group mb-3">
-                                        <input type="text" class="form-control text-right bg-white"
-                                            style="text-align: right;" id="accountName" placeholder="Enter Name"
-                                            aria-label="Name" aria-describedby="basic-addon2" pattern="[A-Za-z0-9]+"
-                                            title="Should contain only your first name consisting of just letters and numbers"
-                                            autocomplete="off">
-                                        <span class="input-group-text bg-dark" id="basic-addon2">@example.com</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!--Grid column-->
-
-                    </div>
-                    <!--Grid row-->
-                    <a class="btn btn-primary" href="#emailcomplete" onclick="return configureGoPhishAccount(event);"
-                        role="button">Next</a>
-                </div>
-            </section>
-
-            <!-- <div id="popoverHelp" class="sticky-top fa-parent"
-                style="padding-top:10px;display:inline-block;margin-left:-1000px;left:10px;" data-bs-toggle="popover"
-                data-bs-html="true" data-bs-content="" data-bs-title="Phish and Tips" data-bs-placement="bottom">
-                <i class="fas fa-question-circle fa-hover-beat"
-                    style="color:rgba(var(--bs-primary-rgb));font-size:48pt"></i>
-            </div>-->
-
-            <section id="emailcomplete" class="text-center min-vh-100">
-                <hr class="my-5">
-
-                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
-                    <!-- Heading -->
-                    <h2 class="mb-3 font-weight-bold">Training Profile</h2>
-
-                    <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-8">
-                            <p>Thank you, we have setup your new training email address: <span id="newAccount"></span>
-                            </p>
-                            <!-- Description -->
-                            <p>You can tailor your training profile to match the activities you currently perform
-                                online. You can limit the categories from
-                                which training emails are generated by selecting only categories that are of interest to
-                                you.</p>
-                            <p>By default emails will be generated
-                                at random from all categories. Select specific categories below to tailor your profile
-                                and then click the Generate once you are done.
-                                Alternatively, leave the selection as it is and click the Generate button to use the
-                                default options.
-                            </p>
-                            <div id="category-selection">
-
-                            </div>
-
-
-                        </div>
-                        <!--Grid column-->
-
-                    </div>
-                    <a class="btn btn-primary" href="#generatecomplete" onclick="return generateGoPhishEmails(event);"
-                        role="button">Generate</a>
-                </div>
-                <!--Grid row-->
-
-            </section>
-
-
-
-            <!--Section: Best Features-->
-            <section id="generatecomplete" class="text-center min-vh-100">
-                <hr class="my-5">
-
-                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
-                    <!-- Heading -->
-                    <h2 class="mb-3 font-weight-bold">Training Email Account</h2>
-
-                    <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-8">
-
-                            <!-- Description -->
-
-                            <p>The exercise requires you to select suspicious parts of the email. You can do that by
-                                click or touching the parts of
-                                the email that you believe are suspicious. An example is shown below:</p>
-                            <div class="video-container">
-                                <video id="videoObj" onclick="playPause(event)" onplay="hideButton()"
-                                    onpause="showButton()" onended="exitFullscreen()" width="100%" height="360" controls>
-                                    <source src="./imgs/intro.mp4" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
-                                <div id="playButtonOverlay" class="play-button-container" onclick="playPause(event)">
-                                    <!-- The player button -->
-                                    <div class="play-button"><i class="fa fa-play-circle"></i></div>
-                                </div>
-                            </div>
-                            <!--<p>If you would like further help click <a href="">Here</a></p>-->
-
-                        </div>
-                        <!--Grid column-->
-
-                    </div>
-                    <a class="btn btn-primary" href="./modules/email/email.html" role="button">Start</a>
-                </div>
-                <!--Grid row-->
-
-            </section>
-
-            <!--Section: Result Reset-->
-            <section id="trainingsummary" class="text-center min-vh-100">
-                <hr class="my-5">
-
-                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
-                    <!-- Heading -->
-                    <!--<h2 class="mb-3 font-weight-bold">Training Summary</h2>->
-
-                    <!-accordion-flush-Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-8">
-
-                            <!-- Description -->
-
-                            <p><strong>Congratulations! You've completed the Phish and Tips training exercise.</strong>
-                            </p>
-                            <!--Below you
-                                    will find further information on the different types of suspicious content you may
-                                    have seen whilst completing the training. Click or touch the heading too see more
-                                    information.-->
-
-                            <p>Once you've finished reading please click the Next button, where we will collect some
-                                usage information and provide an opportunity for you to restart the training if you wish
-                                to have another go.
-                            </p>
-                            <div><strong>Training Summary</strong></div>
-                            <p>The aim of the training was to encourage you to look at emails as a series of smaller
-                                parts and to evaluate each one separately. You saw a range of tricks that phishers can
-                                use to try to catch you out:
-                                <div style="margin:0 auto; text-align:left;max-width:90%">
-                            <ul>
-                                <li><strong>Spelling:</strong> It is not uncommon to see spelling or grammar errors in
-                                    phishing and scam emails.</li>
-                                <li><strong>Urgent Language:</strong> Phishers may try create a sense or urgency, to get
-                                    you to act before you realise it’s a scam.</li>
-                                <li><strong>Hidden or Disguised Links:</strong> Phishers may hide disguised addresses in
-                                    links or buttons to get you to visit a fake site. Always check the link first!</li>
-                                <li><strong>From Fake Address:</strong> Always check the address to see if they the
-                                    person who sent it is who they say they are!</li>
-                                <li><strong>Generic Greeting:</strong> Phishers may not know your actual name, so use
-                                    very general greetings. </li>
-                            </ul>
-                            </div>
-                            </p>
-                            <div class="accordion " id="accordionExample">
-                                <!--<div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingOne">
-                                        <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseOne" aria-expanded="true"
-                                            aria-controls="collapseOne">
-                                            Training Summary
-                                        </button>
-                                    </h2>
-                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body text-start">
-                                            <p>The aim of the training was to encourage you to look at emails as a
-                                                series of smaller parts and to evaluate each one separately. You may
-                                                have seen examples of content we have labelled as suspicious in
-                                                legitimate emails. This is to be expected to some degree.</p>
-                                            <p>Phishers and scammers look to replicate legitimate emails. A
-                                                legitimate company may send you an email with an urgent message,
-                                                whilst a
-                                                phisher will use urgent language to try to drive you towards their
-                                                scam website. This is one of the biggest challenges when evaluating
-                                                phishing emails.</p>
-                                            <p>As such, the objective is not to classify the email as a whole, but
-                                                to encourage better risk evaluation. If you see one or more
-                                                suspicious parts to an email it does not necessarily mean the email
-                                                is a scam or phishing email, but it should encourage greater caution
-                                                and investigation on your part. If you are uncertain about whether
-                                                an email is legitimate do not hesitate to check with the company
-                                                directly or ask friends or relatives for their opinion.</p>
-
-                                            <p>When
-                                                checking with a company make sure to use known good contact details,
-                                                for example, visit the website using a previously saved bookmark or
-                                                contact via a phone number from a previous bill, statement or
-                                                correspondence. In particular, do not use the contact details, links
-                                                or web addresses in the suspicious email itself as these may be part
-                                                of the scam. </p>
-                                        </div>
-                                    </div>
-                                </div>-->
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingTwo">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                            aria-expanded="false" aria-controls="collapseTwo">
-                                            Spelling and Grammar Errors
-                                        </button>
-                                    </h2>
-                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                        aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body text-start">
-                                            <p>It is not uncommon to see spelling or grammar errors in phishing and
-                                                scam emails. This is primarily due to the writers not being native
-                                                English speakers. If you see spelling or grammar errors in an
-                                                email it is a strong indicator that the email may not be legitimate,
-                                                and requires additional caution.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingThree">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                            aria-expanded="false" aria-controls="collapseThree">
-                                            Urgent Language
-                                        </button>
-                                    </h2>
-                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                        aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body  text-start">
-                                            <p>The objective of most phishers and scammers is to get you to take an
-                                                action you would not normally take, for example, visiting a
-                                                different website or providing your login details. They do this by
-                                                creating a sense of urgency through techniques like threatening a
-                                                service is about to terminate, you are about to lose access to data or
-                                                an account, or that an opportunity is about to be missed.</p>
-                                            <p> Such
-                                                urgent language should raise suspicion but cannot be entirely
-                                                excluded from legitimate emails. Unfortunately many legitimate
-                                                companies are seeking to get you to take action as well, for
-                                                example, visiting their site, buying a product from them, or signing
-                                                up for new services. This can be one of the most difficult to
-                                                distinguish, but in general, if you feel a sense of urgency take a
-                                                moment to evaluate in more detail the email and if there are any
-                                                doubts, contact the company directly to determine if the email is
-                                                legitimate.</p>
-                                            <p>Do not be concerned about contacting a company directly to check. You
-                                                are not wasting their time. If they are sending emails that are
-                                                difficult to distinguish from phishing and scam emails then that is
-                                                their own fault and they should be doing better.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingFour">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                            aria-expanded="false" aria-controls="collapseFour">
-                                            Hidden or disguised links
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFour" class="accordion-collapse collapse"
-                                        aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body  text-start">
-                                            <p>Phishing and scam emails will often look to disguise or hide the
-                                                address of the website they are trying to get you to visit. There
-                                                are a number of ways they can do this, ranging from registering
-                                                similar looking or sounding addresses through to hiding the link
-                                                behind a button or different text, for example, the text "Click
-                                                Here".</p>
-                                            <p> You can see where a link is going to go to by hovering over
-                                                it with your mouse and looking in the bottom left hand corner of the
-                                                screen. It will show you where the link points to, which may be
-                                                different to what is written in the text. Always check this value to
-                                                make sure it is the address you expect and know for the company
-                                                claiming to be the sender of the email address.</p>
-                                            <p>If it is different
-                                                or looks unusual do not click the link. Visit the company directly
-                                                using a known good link, for example, a bookmark or website address
-                                                included in a previous bill or statement. If in doubt contact the
-                                                company directly to check. </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-                                    <h2 class="accordion-header" id="headingFive">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                            aria-expanded="false" aria-controls="collapseFive">
-                                            Fake From Address
-                                        </button>
-                                    </h2>
-                                    <div id="collapseFive" class="accordion-collapse collapse"
-                                        aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body  text-start">
-                                            <p>Phishers and scammers will exploit weaknesses in how email addresses
-                                                are displayed to make an email look like it came from a different
-                                                address - normally a reputable company or organisation - rather than
-                                                the scammer's real address. Many email providers are wise to this and
-                                                mark such emails as spam, but it is worth being aware of in case a
-                                                scam email gets through</p>
-                                            <p>To verify the <b>From:</b> address look at the headers of the email.
-                                                In the case of the GMail this can be accessed by clicking the
-                                                downwards arrow next to your name or address in the email header.
-                                                This will show the additional headers, including the reply-to and
-                                                possibly sender header. If these do not match the <b>From:</b>
-                                                address it could be a scammer impersonating someone else.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="accordion-item">
-
-                                    <h2 class="accordion-header" id="headingSize">
-                                        <button class="accordion-button collapsed" type="button"
-                                            data-bs-toggle="collapse" data-bs-target="#collapseSix"
-                                            aria-expanded="false" aria-controls="collapseSix">
-                                            Generic Greeting
-                                        </button>
-                                    </h2>
-                                    <div id="collapseSix" class="accordion-collapse collapse"
-                                        aria-labelledby="headingSix" data-bs-parent="#accordionExample">
-                                        <div class="accordion-body  text-start">
-                                            <p>Scammers and Phishers may not know your actual name, they may only
-                                                have your email address. They still need to provide a greeting in
-                                                the email so will often pick generic greetings, for example, <b>Dear
-                                                    Valued Customer</b> or <b>To Our Newest VIP Member</b>. These
-                                                are designed to be flattering whilst still being entirely generic.
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <a class="btn btn-primary" href="#finish" onclick="return submitData(event);" role="button">Next</a>
-                    <!--Grid column-->
-
-                </div>
-            </section>
-
-
-            <!--Section: Best Features-->
-            <section id="finish" class="text-center min-vh-100">
-                <hr class="my-5">
-
-                <div class="shadow p-3 mb-5 bg-light text-black  rounded">
-                    <!-- Heading -->
-                    <h2 class="mb-3 font-weight-bold">Finish Training</h2>
-
-                    <!--Grid row-->
-                    <div class="row d-flex justify-content-center mb-4">
-
-                        <!--Grid column-->
-                        <div class="col-md-8">
-
-                            <!-- Description -->
-                            <p>Thank you for taking part in our focus groups. We are uploading some statistics from the
-                                training platform. Once the green tick is shown you can click Next and have
-                                another go or finish the training and clear your data.</p>
-                            <p>If you see a red cross or the spinner dots do not disappear after a few seconds please
-                                inform a facilitator.</p>
-                            <div id="uploading">
-                                <i id="uploading-spinner" class="fas fa-spinner fa-spin d-none"></i>
-                                <i id="uploading-success" class="fas fa-check-circle d-none"></i>
-                                <i id="uploading-failure" class="fas fa-times-circle d-none"
-                                    onclick="submitData(event)"></i>
-
-                            </div>
-                            <a id="manual-download" class="btn btn-primary d-none" onclick="exportData();false;"
-                                role="button">Download Data Locally</a>
-
-
-                        </div>
-                        <!--Grid column-->
-
-                    </div>
-                    <a class="btn btn-primary" onclick="resetTraining();false;" role="button">Reset Data and Try
-                        Again</a>
-                    <a class="btn btn-primary" onclick="finish();false;" role="button">Finish and Clear Data</a>
-                </div>
-                <!--Grid row-->
-
-            </section>
-
-
-        </div>
-        <!--Grid row-->
-
-
-
-
-
-
-        <div class="modal fade" id="messageModal" data-bs-backdrop="static" data-bs-keyboard="false">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content sccs-modal-content text-black">
-
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 id="modalHeading" class="modal-title">Please select an account</h4>
-
-                    </div>
-
-                    <!-- Modal body -->
-                    <div id="modalBody" class="modal-body">
-                        <p>Multiple training accounts have been created in this browser. Please select the account
-                            you
-                            wish to use:</p>
-                        <select id="multiAccountSelect">
-                            <option value="CreateNew">Create New Training Account</option>
-                        </select>
-
-                    </div>
-
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button id="modalCloseButton" type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                            onclick="checkChangeAccount()">Start</button>
-                    </div>
-
+---
+# You don't need to edit this file, it's empty on purpose.
+# Edit theme's home layout instead if you wanna make some changes
+# See: https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+layout: splash
+author_profile: false
+header:
+  overlay_color: "#fff"
+  
+  overlay_filter: linear-gradient(to right,rgba(0, 0, 0, 0.9), rgba(10, 10, 10, 0.8), rgba(60, 60, 60, 0.4))
+  overlay_image: /assets/images/business-g01e342791_1920.jpg
+  actions:
+    - label: "About"
+      url: "#about"
+    - label: "Background"
+      url: "#background"
+  
+excerpt: "Training platform phishing education"
+about: 
+  - excerpt: | 
+            The Phish and Tips project developed an interactive training site to help older people to become more confident in identifying phishing emails.  The training site is a safe environment to look at a number of example emails and decide whether they are suspicious or not. 
+
+            <div style="width:100%;margin-bottom:30px">
+              <div class="video-container">
+                <video id="videoObj" onclick="playPause(event)" onplay="hideButton()"
+                    onpause="showButton()" onended="exitFullscreen()" width="100%" height="360" controls>
+                    <source src="./training/imgs/intro.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+                <div id="playButtonOverlay" class="play-button-container" onclick="playPause(event)">
+                    <!-- The player button -->
+                    <div class="play-button"><i class="fa fa-play-circle"></i></div>
                 </div>
             </div>
-        </div>
+            </div>
+            This video gives an overview of the training site. It is a screen recording that goes through what you see on the site and what a person needs to do when using the site. It contains descriptive captions and sound.
+
+            We anticipate that the training site can be used by a person in different ways. Firstly, it can be used by a person at home on their own. Secondly, it can be used in a workshop or group environment where a people try it out with the help of a technical support facilitator in an organisation session, for example hosted by a charitable organisation.
+  
+            Our training site has been developed to work entirely within a browser, you do not need to download anything to get it to run. No personal data is collected through its use.  An organisation can download the training and include it  within their website if they wish to do so.
+
+  - id: "about"
+  - name: "about"
+background: 
+  - excerpt: | 
+            This project was led by the University of Surrey and was funded by the National Centre for Cyber Security through one of its Academic Centre of Excellence in Cyber Security Education projects.
+            
+            The project engaged with stakeholders from several charity organisations including Surrey Coalition for Disabled People, Action for Elders and Age UK Surrey. The project team are grateful for their support during the project.
+  
+            We held several feedback sessions and focus groups to seek feedback on the Phish and Tips training site because we released it. We are grateful to all those participants who provided feedback on the look and feel of the site and for their feedback on what they learnt about phisihing emails after trying out the platform.
+  
+            Project Team
+            <ul>
+              <li>Professor Helen Treharne, University of Surrey (Project lead)</li>
+              <li>Dr Dan Gardham, University of Surrey</li>
+              <li>Dr Suzy Prior, Abertay University</li>
+              <li>Dr Karen Renaud, University of Strathclyde</li>
+              <li>Dr Chris Culnane (Castellate Consulting)</li>
+            </ul>
+              
+
+  - id: "background"
+  - name: "background"
+feature_row:
+  - image_path: /assets/images/download.jpg
+    alt: "Image of download symbol on a chalk board"
+    title: "Downloads"
+    btn_label: Downloads
+    excerpt: "Download the facilitator guide and the training site"
+    url: "/downloads/"
+  - image_path: /assets/images/training.jpg
+    alt: "Image of a person sat in front of a computer on a chalk board"
+    title: "Training Site"
+    excerpt: "Access the online training site"
+    url: "/training/"
+
+feature_contact:
+  - title: "Contact Us"
+    excerpt: 'Contact us by emailing [h.treharne@surrey.ac.uk](mailto:h.treharne@surrey.ac.uk)'
+
+sidebar:
+    nav: "docs"
+  
+---
+<h2 id="about" class="text-center">About the Project</h2>
 
 
+{% include feature_row id="about" type="center" text="justify" %}
 
 
+{% include feature_row text="center" %}
 
-</body>
+<h2 id="background" class="text-center">Background</h2>
+{% include feature_row id="background" type="center" text="justify" %}
 
-<script src="./js/bootstrap/bootstrap.bundle.min.js"></script>
+<a name="contact"></a>
+{% include feature_row id="feature_contact" type="center" text="center" %}
 
-
-</html>
