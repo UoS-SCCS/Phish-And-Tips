@@ -46,3 +46,8 @@ video::-webkit-media-controls-start-playback-button {
 .d-none {
     display:none;
 }
+@media (min-width: 37.5em){
+.pair {
+    padding-left:15em;
+}
+}
