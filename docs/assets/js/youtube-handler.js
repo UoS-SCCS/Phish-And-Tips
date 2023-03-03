@@ -1,4 +1,5 @@
 function checkConsent() {
+    return;
     var cookie = getCookie("cookie-consent");
     if (cookie === "true") {
         updateYouTubeEmbeds();

@@ -13,11 +13,10 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: Practice using Passwords
+title: Phish and Tips
 email: h.treharne@surrey.ac.uk
 description: >- # this means to ignore newlines until "baseurl:"
-  A website containing training material, videos and practical exercises for the 
-  Practice using Passwords project.
+  A website containing the training platform for the Phish and Tips project
 minimal_mistakes_skin: default
 search: true
 search_full_content: true
@@ -28,7 +27,7 @@ logo: "/assets/images/logo.png"
 markdown: kramdown
 kramdown:
   auto_ids: true
-remote_theme: mmistakes/minimal-mistakes
+remote_theme: mmistakes/minimal-mistakes@4.24.0
 # Outputting
 permalink: /:categories/:title/
 paginate: 5 # amount of posts to show
